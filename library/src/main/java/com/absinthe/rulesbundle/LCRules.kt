@@ -38,6 +38,7 @@ object LCRules : IAPI {
                 it.label,
                 IconResMap.getIconRes(it.iconIndex),
                 getDescriptionUrl(it),
+                it.regexName,
                 IconResMap.isSingleColorIcon(it.iconIndex)
             )
         }
@@ -47,6 +48,7 @@ object LCRules : IAPI {
                     it.label,
                     IconResMap.getIconRes(it.iconIndex),
                     getDescriptionUrl(it),
+                    it.regexName,
                     IconResMap.isSingleColorIcon(it.iconIndex)
                 )
             }

@@ -6,5 +6,6 @@ data class Rule(
     val label: String,
     @DrawableRes val iconRes: Int,
     val descriptionUrl: String?,
+    val regexName: String?,
     val isSimpleColorIcon: Boolean
 )
