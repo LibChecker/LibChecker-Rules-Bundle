@@ -37,7 +37,8 @@ object LCRules : IAPI {
             return Rule(
                 it.label,
                 IconResMap.getIconRes(it.iconIndex),
-                getDescriptionUrl(it)
+                getDescriptionUrl(it),
+                IconResMap.isSingleColorIcon(it.iconIndex)
             )
         }
         if (useRegex) {
@@ -45,7 +46,8 @@ object LCRules : IAPI {
                 return Rule(
                     it.label,
                     IconResMap.getIconRes(it.iconIndex),
-                    getDescriptionUrl(it)
+                    getDescriptionUrl(it),
+                    IconResMap.isSingleColorIcon(it.iconIndex)
                 )
             }
         }
