@@ -171,7 +171,7 @@ public final class RuleDao_Impl implements RuleDao {
   }
 
   @Override
-  public Object getAllRules(final Continuation<? super List<? extends RuleEntity>> continuation) {
+  public Object getAllRules(final Continuation<? super List<RuleEntity>> continuation) {
     final String _sql = "SELECT * from rules_table";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -231,7 +231,7 @@ public final class RuleDao_Impl implements RuleDao {
   }
 
   @Override
-  public Object getRegexRules(final Continuation<? super List<? extends RuleEntity>> continuation) {
+  public Object getRegexRules(final Continuation<? super List<RuleEntity>> continuation) {
     final String _sql = "SELECT * from rules_table WHERE isRegexRule = 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
