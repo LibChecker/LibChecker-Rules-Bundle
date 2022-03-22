@@ -1,13 +1,12 @@
-plugins {
-  id 'com.android.library'
-  id 'kotlin-android'
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+apply from: "${rootDir.path}/gradle/publish.gradle"
 
 android {
   compileSdk 32
 
   defaultConfig {
-    applicationId "com.absinthe.lc.rulesbundle"
     minSdk 21
     targetSdk 32
     versionCode 1
@@ -33,13 +32,12 @@ android {
 }
 
 dependencies {
-  implementation 'androidx.core:core-ktx:1.7.0'
-  implementation 'androidx.appcompat:appcompat:1.4.0'
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+  api 'androidx.core:core-ktx:1.7.0'
+  api 'androidx.appcompat:appcompat:1.4.1'
+  api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 
   def room_version = "2.4.2"
 
-  implementation "androidx.room:room-runtime:$room_version"
+  api "androidx.room:room-runtime:$room_version"
   annotationProcessor "androidx.room:room-compiler:$room_version"
 }
