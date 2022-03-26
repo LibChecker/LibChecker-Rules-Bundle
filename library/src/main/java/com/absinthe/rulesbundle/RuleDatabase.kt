@@ -14,23 +14,22 @@ abstract class RuleDatabase : RoomDatabase() {
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
-        private var INSTANCE: RuleDatabase? = null
+        private var instance: RuleDatabase? = null
 
         fun getDatabase(context: Context): RuleDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
+            return instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also { instance = it }
             }
-            synchronized(this) {
-                val builder = Room.databaseBuilder(
-                    context.applicationContext,
-                    RuleDatabase::class.java,
-                    "rule_database"
-                ).fallbackToDestructiveMigration()
-                    .createFromAsset("lcrules/rules.db")
-                INSTANCE = builder.build()
-                return INSTANCE!!
-            }
+        }
+
+        private fun buildDatabase(context: Context): RuleDatabase {
+            return Room.databaseBuilder(
+                context.applicationContext,
+                RuleDatabase::class.java,
+                "rules_database"
+            ).fallbackToDestructiveMigration()
+                .createFromAsset("lcrules/rules.db")
+                .build()
         }
     }
 }
