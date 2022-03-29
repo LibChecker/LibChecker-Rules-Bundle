@@ -4,7 +4,7 @@ import android.util.SparseIntArray
 import com.absinthe.lc.rulesbundle.R
 
 object IconResMap {
-  private val MAP = SparseIntArray()
+  private val MAP = SparseIntArray(100)
   private val SINGLE_COLOR_ICON_SET: Set<Int>
 
   init {
