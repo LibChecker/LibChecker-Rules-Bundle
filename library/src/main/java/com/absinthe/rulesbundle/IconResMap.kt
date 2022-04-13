@@ -104,6 +104,8 @@ object IconResMap {
       put(91, R.drawable.ic_lib_godot)
       put(92, R.drawable.ic_lib_gamemaker)
       put(93, R.drawable.ic_lib_cmcc)
+      put(94, R.drawable.ic_lib_mpaas)
+      put(95, R.drawable.ic_lib_node_js)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
