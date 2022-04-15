@@ -28,7 +28,7 @@ object IconResMap {
       put(15, R.drawable.ic_lib_cpp)
       put(16, R.drawable.ic_lib_didi)
       put(17, R.drawable.ic_lib_evernote)
-      put(18, R.drawable.ic_lib_facebook)
+      put(18, R.drawable.ic_lib_meta)
       put(19, R.drawable.ic_lib_firebase)
       put(20, R.drawable.ic_lib_flutter)
       put(21, R.drawable.ic_lib_golang)
@@ -106,13 +106,15 @@ object IconResMap {
       put(93, R.drawable.ic_lib_cmcc)
       put(94, R.drawable.ic_lib_mpaas)
       put(95, R.drawable.ic_lib_node_js)
+      put(96, R.drawable.ic_lib_fresco)
+      put(97, R.drawable.ic_lib_meituan)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
       -1, 1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
       25, 27, 30, 31, 40, 43, 44, 46, 47, 48, 50, 51,
       52, 53, 54, 56, 59, 63, 64, 66, 67, 69, 74, 76,
-      81, 82, 83, 84, 86, 93
+      81, 82, 83, 84, 86, 93, 97
     )
   }
 

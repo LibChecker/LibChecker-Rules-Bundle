@@ -32,6 +32,22 @@ object LCRules : IAPI {
         return 0
     }
 
+    override fun getItemCounts(): Int {
+        contextRef?.get()?.assets?.open("lcrules/version.prop")?.let {
+            runCatching {
+                Properties().apply {
+                    load(it)
+                    return getProperty("items").toInt()
+                }
+            }.onFailure {
+                return 0
+            }
+        }
+        return 0
+    }
+
+    override fun getRulesAssetPath(): String = "lcrules/rules.db"
+
     override suspend fun getRule(libName: String, @LibType type: Int, useRegex: Boolean): Rule? {
         ruleRepo?.getRule(libName)?.let {
             return Rule(
