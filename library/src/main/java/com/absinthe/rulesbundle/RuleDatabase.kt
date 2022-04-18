@@ -28,7 +28,7 @@ abstract class RuleDatabase : RoomDatabase() {
                 RuleDatabase::class.java,
                 "rules_database"
             ).fallbackToDestructiveMigration()
-                .createFromAsset("lcrules/rules.db")
+                .createFromAsset(LCRules.getRulesAssetPath())
                 .build()
         }
     }

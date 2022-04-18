@@ -108,13 +108,14 @@ object IconResMap {
       put(95, R.drawable.ic_lib_node_js)
       put(96, R.drawable.ic_lib_fresco)
       put(97, R.drawable.ic_lib_meituan)
+      put(98, R.drawable.ic_lib_netease_shield)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
-      -1, 1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
-      25, 27, 30, 31, 40, 43, 44, 46, 47, 48, 50, 51,
-      52, 53, 54, 56, 59, 63, 64, 66, 67, 69, 74, 76,
-      81, 82, 83, 84, 86, 93, 97
+      -1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
+      25, 27, 30, 31, 40, 43, 44, 46, 47, 48, 51, 53,
+      54, 56, 59, 63, 64, 66, 74, 76, 81, 82, 83, 84,
+      86, 93, 97
     )
   }
 
