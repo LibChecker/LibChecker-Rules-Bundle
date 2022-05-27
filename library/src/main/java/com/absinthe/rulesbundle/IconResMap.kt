@@ -109,6 +109,7 @@ object IconResMap {
       put(96, R.drawable.ic_lib_fresco)
       put(97, R.drawable.ic_lib_meituan)
       put(98, R.drawable.ic_lib_netease_shield)
+      put(99, R.drawable.ic_lib_vorbis)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
