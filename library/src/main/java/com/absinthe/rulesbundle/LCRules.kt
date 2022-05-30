@@ -80,7 +80,7 @@ object LCRules : IAPI {
         this.repo = repo
         this.baseUrl = when (repo) {
             LCRemoteRepo.Github -> Urls.GITHUB_ROOT_URL
-            LCRemoteRepo.Gitee -> Urls.GITEE_ROOT_URL
+            LCRemoteRepo.Gitlab -> Urls.GITLAB_ROOT_URL
         }
     }
 
