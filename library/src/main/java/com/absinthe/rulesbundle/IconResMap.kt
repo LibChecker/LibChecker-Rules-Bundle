@@ -111,13 +111,14 @@ object IconResMap {
       put(98, R.drawable.ic_lib_netease_shield)
       put(99, R.drawable.ic_lib_vorbis)
       put(100, R.drawable.ic_lib_mapbox)
+      put(101, R.drawable.ic_lib_google_cardboard)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
       -1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
       25, 27, 30, 31, 40, 43, 44, 46, 47, 48, 51, 53,
       54, 56, 59, 63, 64, 66, 74, 76, 81, 82, 83, 84,
-      86, 93, 97, 100
+      86, 93, 97, 100, 101
     )
   }
 
