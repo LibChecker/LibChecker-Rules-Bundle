@@ -56,7 +56,7 @@ object IconResMap {
       put(43, R.drawable.ic_lib_rongyun)
       put(44, R.drawable.ic_lib_sensors)
       put(45, R.drawable.ic_lib_shizuku)
-      put(46, R.drawable.ic_lib_sql)
+      put(46, R.drawable.ic_lib_sqlite)
       put(47, R.drawable.ic_lib_square)
       put(48, R.drawable.ic_lib_tencent)
       put(49, R.drawable.ic_lib_tencent_ad)
@@ -112,13 +112,14 @@ object IconResMap {
       put(99, R.drawable.ic_lib_vorbis)
       put(100, R.drawable.ic_lib_mapbox)
       put(101, R.drawable.ic_lib_google_cardboard)
+      put(102, R.drawable.ic_lib_ncnn)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
       -1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
-      25, 27, 30, 31, 40, 43, 44, 46, 47, 48, 51, 53,
-      54, 56, 59, 63, 64, 66, 74, 76, 81, 82, 83, 84,
-      86, 93, 97, 100, 101
+      25, 27, 30, 31, 40, 43, 44, 47, 48, 51, 53, 56,
+      59, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93, 97,
+      100, 101
     )
   }
 
