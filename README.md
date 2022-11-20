@@ -1,8 +1,8 @@
 # LibChecker-Rules-Bundle
 
-[![](https://jitpack.io/v/zhaobozhen/LibChecker-Rules-Bundle.svg)](https://jitpack.io/v/zhaobozhen/LibChecker-Rules-Bundle.svg)
+[![](https://jitpack.io/v/LibChecker/LibChecker-Rules-Bundle.svg)](https://jitpack.io/v/LibChecker/LibChecker-Rules-Bundle.svg)
 
-Make it easy to use [LibChecker](https://github.com/zhaobozhen/LibChecker) marked libraries rules in your apps.
+Make it easy to use [LibChecker](https://github.com/LibChecker/LibChecker) marked libraries rules in your apps.
 
 ## Download
 
@@ -11,7 +11,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 dependencies {
-    implementation "com.github.zhaobozhen:LibChecker-Rules-Bundle:${latest_version}"
+    implementation "com.github.LibChecker:LibChecker-Rules-Bundle:${latest_version}"
 
     // Required: AndroidX Room
     implementation 'androidx.room:room-runtime:2.4.2'
