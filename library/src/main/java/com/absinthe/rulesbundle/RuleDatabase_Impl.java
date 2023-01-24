@@ -52,7 +52,7 @@ public final class RuleDatabase_Impl extends RuleDatabase {
       }
 
       @Override
-      protected void onCreate(SupportSQLiteDatabase _db) {
+      public void onCreate(SupportSQLiteDatabase _db) {
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onCreate(_db);
@@ -81,7 +81,7 @@ public final class RuleDatabase_Impl extends RuleDatabase {
       }
 
       @Override
-      protected ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
+      public ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
         final HashMap<String, Column> _columnsRulesTable = new HashMap<String, Column>(7);
         _columnsRulesTable.put("_id", new Column("_id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsRulesTable.put("name", new Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));

@@ -14,8 +14,8 @@ dependencies {
     implementation "com.github.LibChecker:LibChecker-Rules-Bundle:${latest_version}"
 
     // Required: AndroidX Room
-    implementation 'androidx.room:room-runtime:2.4.2'
-    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation 'androidx.room:room-runtime:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
 
     // Required: Kotlin Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
