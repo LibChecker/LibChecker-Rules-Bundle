@@ -14,6 +14,7 @@ object LCRules : IAPI {
     private var ruleRepo: RuleRepository? = null
 
     fun init(context: Context) {
+        Repositories.checkRulesDatabase(context)
         contextRef = WeakReference(context)
         ruleRepo = RuleRepository(RuleDatabase.getDatabase(context).ruleDao())
     }

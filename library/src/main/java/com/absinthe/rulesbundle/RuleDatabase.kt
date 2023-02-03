@@ -26,7 +26,7 @@ abstract class RuleDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 RuleDatabase::class.java,
-                "rules_database"
+                Repositories.RULES_DATABASE_NAME
             ).fallbackToDestructiveMigration()
                 .createFromAsset(LCRules.getRulesAssetPath())
                 .build()
