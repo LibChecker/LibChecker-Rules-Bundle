@@ -7,5 +7,5 @@ object Urls {
     const val GITHUB_ROOT_URL =
         "https://raw.githubusercontent.com/LibChecker/LibChecker-Rules/$WORKING_BRANCH/"
     const val GITLAB_ROOT_URL =
-        "https://gitlab.com/LibChecker/LibChecker-Rules/-/raw/$WORKING_BRANCH/"
+        "https://gitlab.com/zhaobozhen/LibChecker-Rules/-/raw/$WORKING_BRANCH/"
 }
