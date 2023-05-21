@@ -119,13 +119,18 @@ object IconResMap {
       put(106, R.drawable.ic_lib_meiqia)
       put(107, R.drawable.ic_lib_instabug)
       put(108, R.drawable.ic_lib_rust)
+      put(109, R.drawable.ic_lib_volcengine)
+      put(110, R.drawable.ic_lib_wwise)
+      put(111, R.drawable.ic_lib_gio)
+      put(112, R.drawable.ic_lib_mpv)
+      put(113, R.drawable.ic_lib_isar)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
       -1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
       25, 27, 30, 31, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93, 97,
-      100, 101, 103, 104
+      100, 101, 103, 104, 108, 110, 111
     )
   }
 
