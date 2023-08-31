@@ -124,6 +124,9 @@ object IconResMap {
       put(111, R.drawable.ic_lib_gio)
       put(112, R.drawable.ic_lib_mpv)
       put(113, R.drawable.ic_lib_isar)
+      put(114, R.drawable.ic_lib_snapdragon)
+      put(115, R.drawable.ic_lib_oracle)
+      put(116, R.drawable.ic_lib_javet)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
