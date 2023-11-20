@@ -10,6 +10,11 @@ abstract class RuleDatabase : RoomDatabase() {
 
     abstract fun ruleDao(): RuleDao
 
+    override fun close() {
+        super.close()
+        instance = null
+    }
+
     companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.
