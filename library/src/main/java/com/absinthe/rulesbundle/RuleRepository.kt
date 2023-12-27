@@ -24,7 +24,7 @@ class RuleRepository(private val ruleDao: RuleDao) {
         }
     }
 
-    suspend fun getRule(name: String) = rules?.get(name) ?: ruleDao.getRule(name)
+    fun getRule(name: String) = rules?.get(name)
 
     suspend fun insertRules(rules: List<RuleEntity>) {
         ruleDao.insertRules(rules)
