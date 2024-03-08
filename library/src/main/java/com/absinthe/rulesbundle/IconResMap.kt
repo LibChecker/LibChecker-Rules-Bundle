@@ -130,6 +130,9 @@ object IconResMap {
       put(117, R.drawable.ic_lib_openvpn)
       put(118, R.drawable.ic_lib_wireguard)
       put(119, R.drawable.ic_lib_rootbeer)
+      put(120, R.drawable.ic_lib_xiaohongshu)
+      put(121, R.drawable.ic_lib_megvii)
+      put(122, R.drawable.ic_lib_folly)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
