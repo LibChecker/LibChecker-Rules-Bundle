@@ -20,8 +20,8 @@ object Repositories {
         val localCloudVersionFile = File(context.filesDir, LOCAL_RULES_VERSION_FILE)
         if (localCloudVersionFile.exists().not()) return LCRules.getVersion()
         if (localCloudVersionFile.isDirectory.not()) return LCRules.getVersion()
-        localCloudVersionFile.listFiles()?.takeIf { it.isNotEmpty() }?.let {
-            return runCatching { it[0].name.toInt() }.getOrDefault(LCRules.getVersion())
+        localCloudVersionFile.listFiles()?.takeIf { it.isNotEmpty() }?.let { files ->
+            return runCatching { files.maxOf { it.name.toInt() } }.getOrDefault(LCRules.getVersion())
         } ?: return LCRules.getVersion()
     }
 
@@ -54,8 +54,8 @@ object Repositories {
         val versionFile = File(context.filesDir, LOCAL_RULES_VERSION_FILE)
         if (versionFile.exists().not()) return false
         if (versionFile.isDirectory.not()) return false
-        versionFile.listFiles()?.takeIf { it.isNotEmpty() }?.let {
-            val version = runCatching { it[0].name.toInt() }.getOrDefault(0)
+        versionFile.listFiles()?.takeIf { it.isNotEmpty() }?.let { files ->
+            val version = runCatching { files.maxOf { it.name.toInt() } }.getOrDefault(0)
             return version >= LCRules.getVersion()
         } ?: return false
     }
