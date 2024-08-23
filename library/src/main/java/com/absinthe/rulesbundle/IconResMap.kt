@@ -133,10 +133,13 @@ object IconResMap {
       put(120, R.drawable.ic_lib_xiaohongshu)
       put(121, R.drawable.ic_lib_megvii)
       put(122, R.drawable.ic_lib_folly)
-      put(123, R.drawable.iic_lib_ironsource)
+      put(123, R.drawable.ic_lib_ironsource)
       put(124, R.drawable.ic_lib_android_ide)
       put(125, R.drawable.ic_lib_rnscreen)
       put(126, R.drawable.ic_lib_fcitx)
+      put(127, R.drawable.ic_lib_tuanjie)
+      put(128, R.drawable.ic_lib_tvm)
+      put(129, R.drawable.ic_lib_singbox)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
