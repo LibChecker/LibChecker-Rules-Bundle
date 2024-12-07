@@ -21,7 +21,7 @@ object IconResMap {
       put(8, R.drawable.ic_lib_appauth)
       put(9, R.drawable.ic_lib_baidu)
       put(10, R.drawable.ic_lib_bilibili)
-      put(11, R.drawable.ic_lib_bugly)
+      put(11, R.drawable.ic_lib_gradle)
       put(12, R.drawable.ic_lib_bytedance)
       put(13, R.drawable.ic_lib_chromium)
       put(14, R.drawable.ic_lib_cmb)
@@ -140,13 +140,21 @@ object IconResMap {
       put(127, R.drawable.ic_lib_tuanjie)
       put(128, R.drawable.ic_lib_tvm)
       put(129, R.drawable.ic_lib_singbox)
+      put(130, R.drawable.ic_lib_google_mediapipe)
+      put(131, R.drawable.ic_lib_tencent_tds)
+      put(132, R.drawable.ic_lib_tencent_beacon)
+      put(133, R.drawable.ic_lib_tencent_youtu)
+      put(134, R.drawable.ic_lib_jna)
+      put(135, R.drawable.ic_lib_maplibre_native)
+      put(136, R.drawable.ic_lib_graphene_os)
+      put(137, R.drawable.ic_lib_termux)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
-      -1, 2, 3, 4, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
-      25, 27, 30, 31, 40, 43, 44, 47, 48, 51, 53, 56,
+      -1, 2, 3, 5, 6, 9, 10, 13, 14, 15, 16, 17,
+      25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
-      97, 100, 101, 103, 104, 108, 110, 111, 124
+      97, 100, 101, 103, 104, 108, 110, 111, 124, 136
     )
   }
 
