@@ -148,13 +148,14 @@ object IconResMap {
       put(135, R.drawable.ic_lib_maplibre_native)
       put(136, R.drawable.ic_lib_graphene_os)
       put(137, R.drawable.ic_lib_termux)
+      put(138, R.drawable.ic_lib_rive)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
       -1, 2, 3, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
       25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
-      97, 100, 101, 103, 104, 108, 110, 111, 124, 136
+      97, 100, 101, 103, 104, 108, 110, 111, 124, 136, 138
     )
   }
 
