@@ -7,10 +7,20 @@ import java.io.File
 
 object Repositories {
 
-    const val RULES_DATABASE_NAME = "rules_database"
+    const val RULES_DATABASE_NAME = "lcrules_database"
     private const val LOCAL_RULES_VERSION_FILE = "lcrules/version"
 
     fun checkRulesDatabase(context: Context) {
+        val dbFile = context.getDatabasePath(RULES_DATABASE_NAME)
+        if (!dbFile.exists()) {
+            // On first launch, copy the prebuilt database from assets
+            context.assets.open(LCRules.getRulesAssetPath()).use { input ->
+                dbFile.parentFile?.mkdirs()
+                dbFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
         if (!checkMd5(context) && !checkVersion(context)) {
             deleteRulesDatabase(context)
         }

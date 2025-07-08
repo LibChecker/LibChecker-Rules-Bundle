@@ -15,8 +15,12 @@ object LCRules : IAPI {
 
     fun init(context: Context) {
         Repositories.checkRulesDatabase(context)
-        contextRef = WeakReference(context)
-        ruleRepo = RuleRepository(RuleDatabase.getDatabase(context).ruleDao())
+        contextRef = WeakReference(context.applicationContext)
+        ruleRepo = RuleRepository(context.applicationContext)
+    }
+
+    fun closeDb() {
+        ruleRepo?.closeDb()
     }
 
     override fun getVersion(): Int {
@@ -50,17 +54,21 @@ object LCRules : IAPI {
     override fun getRulesAssetPath(): String = "lcrules/rules.db"
 
     override suspend fun getRule(libName: String, @LibType type: Int, useRegex: Boolean): Rule? {
-        ruleRepo?.getRule(libName)?.let {
+        val repo = ruleRepo ?: return null
+        val entity = repo.getRule(libName)
+        if (entity != null) {
             return Rule(
-                it.label,
-                IconResMap.getIconRes(it.iconIndex),
-                getDescriptionUrl(it),
-                it.regexName,
-                IconResMap.isSingleColorIcon(it.iconIndex)
+                entity.label,
+                IconResMap.getIconRes(entity.iconIndex),
+                getDescriptionUrl(entity),
+                entity.regexName,
+                IconResMap.isSingleColorIcon(entity.iconIndex)
             )
         }
         if (useRegex) {
-            findRuleRegex(libName, type)?.let {
+            val regexMap = repo.getRegexRules()
+            val match = regexMap.entries.firstOrNull { it.key.matcher(libName).matches() && it.value.type == type }
+            match?.value?.let {
                 return Rule(
                     it.label,
                     IconResMap.getIconRes(it.iconIndex),
@@ -98,18 +106,5 @@ object LCRules : IAPI {
     private fun getDescriptionUrl(entity: RuleEntity): String? {
         val dir = dirMap[entity.type] ?: return null
         return "$baseUrl$dir/${entity.name}.json"
-    }
-
-    private fun findRuleRegex(string: String, @LibType type: Int): RuleEntity? {
-        RuleRepository.regexRules?.let {
-            val iterator = it.entries.iterator()
-            while (iterator.hasNext()) {
-                val entry = iterator.next()
-                if (entry.key.matcher(string).matches() && entry.value.type == type) {
-                    return entry.value
-                }
-            }
-        }
-        return null
     }
 }

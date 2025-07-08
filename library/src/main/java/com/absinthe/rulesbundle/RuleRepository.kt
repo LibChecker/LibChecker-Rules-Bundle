@@ -1,45 +1,45 @@
 package com.absinthe.rulesbundle
 
+import android.content.Context
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
-class RuleRepository(private val ruleDao: RuleDao) {
+class RuleRepository(context: Context) {
+    private val ruleDao = RuleDao(context)
 
-    init {
-        GlobalScope.launch(Dispatchers.IO) {
-            if (rules == null) {
-                rules = getAllRules().asSequence()
-                    .map {
-                        it.name to it
-                    }
-                    .toMap()
-            }
-            if (regexRules == null) {
-                regexRules = getRegexRules().asSequence()
-                    .map { Pattern.compile(it.name) to it }
-                    .toMap()
-            }
+    private var rulesCache: Map<String, RuleEntity>? = null
+    private var regexRulesCache: Map<Pattern, RuleEntity>? = null
+
+    suspend fun getRule(name: String): RuleEntity? {
+        if (rulesCache == null) {
+            rulesCache = getAllRules().associateBy { it.name }
         }
+        return rulesCache?.get(name)
     }
 
-    fun getRule(name: String) = rules?.get(name)
-
-    suspend fun insertRules(rules: List<RuleEntity>) {
+    suspend fun insertRules(rules: List<RuleEntity>) = withContext(Dispatchers.IO) {
         ruleDao.insertRules(rules)
+        rulesCache = null
+        regexRulesCache = null
     }
 
-    fun deleteAllRules() {
+    suspend fun deleteAllRules() = withContext(Dispatchers.IO) {
         ruleDao.deleteAllRules()
+        rulesCache = null
+        regexRulesCache = null
     }
 
-    suspend fun getAllRules() = ruleDao.getAllRules()
+    suspend fun getAllRules(): List<RuleEntity> = ruleDao.getAllRules()
 
-    suspend fun getRegexRules() = ruleDao.getRegexRules()
+    suspend fun getRegexRules(): Map<Pattern, RuleEntity> {
+        if (regexRulesCache == null) {
+            regexRulesCache = ruleDao.getRegexRules().associateBy({ Pattern.compile(it.name) }, { it })
+        }
+        return regexRulesCache ?: emptyMap()
+    }
 
-    companion object {
-        var rules: Map<String, RuleEntity>? = null
-        var regexRules: Map<Pattern, RuleEntity>? = null
+    fun closeDb() {
+        ruleDao.closeDb()
     }
 }

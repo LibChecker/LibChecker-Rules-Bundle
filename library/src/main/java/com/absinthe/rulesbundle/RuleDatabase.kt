@@ -1,40 +1,24 @@
 package com.absinthe.rulesbundle
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
-@Database(entities = [RuleEntity::class], version = 1)
-abstract class RuleDatabase : RoomDatabase() {
+class RuleDatabaseHelper(context: Context) : SQLiteOpenHelper(
+    context,
+    Repositories.RULES_DATABASE_NAME,
+    null,
+    DATABASE_VERSION
+) {
+    override fun onCreate(db: SQLiteDatabase) {
+        // Prebuilt database, no need to create tables
+    }
 
-    abstract fun ruleDao(): RuleDao
-
-    override fun close() {
-        super.close()
-        instance = null
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // Prebuilt database, no upgrade logic needed
     }
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var instance: RuleDatabase? = null
-
-        fun getDatabase(context: Context): RuleDatabase {
-            return instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
-            }
-        }
-
-        private fun buildDatabase(context: Context): RuleDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                RuleDatabase::class.java,
-                Repositories.RULES_DATABASE_NAME
-            ).fallbackToDestructiveMigration()
-                .createFromAsset(LCRules.getRulesAssetPath())
-                .build()
-        }
+        private const val DATABASE_VERSION = 1
     }
 }
