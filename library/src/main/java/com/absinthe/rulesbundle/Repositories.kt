@@ -11,6 +11,9 @@ object Repositories {
     private const val LOCAL_RULES_VERSION_FILE = "lcrules/version"
 
     fun checkRulesDatabase(context: Context) {
+        if (!checkMd5(context) && !checkVersion(context)) {
+            deleteRulesDatabase(context)
+        }
         val dbFile = context.getDatabasePath(RULES_DATABASE_NAME)
         if (!dbFile.exists()) {
             // On first launch, copy the prebuilt database from assets
@@ -20,9 +23,6 @@ object Repositories {
                     input.copyTo(output)
                 }
             }
-        }
-        if (!checkMd5(context) && !checkVersion(context)) {
-            deleteRulesDatabase(context)
         }
     }
 
