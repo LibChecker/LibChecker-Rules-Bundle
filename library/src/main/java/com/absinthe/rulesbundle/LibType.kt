@@ -19,8 +19,9 @@ const val DEX = 5
 const val STATIC = 6
 const val PERMISSION = 7
 const val METADATA = 8
+const val ACTION = 9
 
-@IntDef(ALL, NATIVE, SERVICE, ACTIVITY, RECEIVER, PROVIDER, DEX, STATIC, PERMISSION, METADATA)
+@IntDef(ALL, NATIVE, SERVICE, ACTIVITY, RECEIVER, PROVIDER, DEX, STATIC, PERMISSION, METADATA, ACTION)
 @Target(AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FIELD, AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
 annotation class LibType
