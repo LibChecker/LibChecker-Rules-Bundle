@@ -8,14 +8,16 @@ import java.util.regex.Pattern
 class RuleRepository(context: Context) {
     private val ruleDao = RuleDao(context)
 
-    private var rulesCache: Map<String, RuleEntity>? = null
+    private var rulesCache: Map<Int, Map<String, RuleEntity>>? = null
     private var regexRulesCache: Map<Pattern, RuleEntity>? = null
 
-    suspend fun getRule(name: String): RuleEntity? {
+    suspend fun getRule(name: String, type: Int): RuleEntity? {
         if (rulesCache == null) {
-            rulesCache = getAllRules().associateBy { it.name }
+            rulesCache = getAllRules()
+                .groupBy { it.type }
+                .mapValues { entry -> entry.value.associateBy { it.name } }
         }
-        return rulesCache?.get(name)
+        return rulesCache?.get(type)?.get(name)
     }
 
     suspend fun insertRules(rules: List<RuleEntity>) = withContext(Dispatchers.IO) {

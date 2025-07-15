@@ -150,6 +150,8 @@ object IconResMap {
       put(137, R.drawable.ic_lib_termux)
       put(138, R.drawable.ic_lib_rive)
       put(139, R.drawable.ic_lib_lynx)
+      put(140, R.drawable.ic_lib_expo)
+      put(141, R.drawable.ic_lib_cordova)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
@@ -157,7 +159,7 @@ object IconResMap {
       25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
       97, 100, 101, 103, 104, 108, 110, 111, 124, 136,
-      138, 139
+      138, 139, 140
     )
   }
 

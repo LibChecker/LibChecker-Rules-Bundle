@@ -55,7 +55,7 @@ object LCRules : IAPI {
 
     override suspend fun getRule(libName: String, @LibType type: Int, useRegex: Boolean): Rule? {
         val repo = ruleRepo ?: return null
-        val entity = repo.getRule(libName)
+        val entity = repo.getRule(libName, type)
         if (entity != null) {
             return Rule(
                 entity.label,
