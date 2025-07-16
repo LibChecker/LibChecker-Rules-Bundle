@@ -58,6 +58,8 @@ object LCRules : IAPI {
         val entity = repo.getRule(libName, type)
         if (entity != null) {
             return Rule(
+                libName,
+                type,
                 entity.label,
                 IconResMap.getIconRes(entity.iconIndex),
                 getDescriptionUrl(entity),
@@ -70,6 +72,8 @@ object LCRules : IAPI {
             val match = regexMap.entries.firstOrNull { it.key.matcher(libName).matches() && it.value.type == type }
             match?.value?.let {
                 return Rule(
+                    libName,
+                    type,
                     it.label,
                     IconResMap.getIconRes(it.iconIndex),
                     getDescriptionUrl(it),
