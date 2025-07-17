@@ -32,14 +32,12 @@ class RuleDao(context: Context) {
             db.setTransactionSuccessful()
         } finally {
             db.endTransaction()
-            db.close()
         }
     }
 
     fun deleteAllRules() {
         val db = dbHelper.writableDatabase
         db.delete("rules_table", null, null)
-        db.close()
     }
 
     suspend fun getRule(name: String): RuleEntity? = withContext(Dispatchers.IO) {
@@ -51,9 +49,7 @@ class RuleDao(context: Context) {
             arrayOf(name),
             null, null, null
         ).use { cursor ->
-            val entity = if (cursor.moveToFirst()) cursorToEntity(cursor) else null
-            db.close()
-            entity
+            if (cursor.moveToFirst()) cursorToEntity(cursor) else null
         }
     }
 
@@ -64,7 +60,6 @@ class RuleDao(context: Context) {
             while (cursor.moveToNext()) {
                 list.add(cursorToEntity(cursor))
             }
-            db.close()
             list
         }
     }
@@ -81,7 +76,6 @@ class RuleDao(context: Context) {
             while (cursor.moveToNext()) {
                 list.add(cursorToEntity(cursor))
             }
-            db.close()
             list
         }
     }
