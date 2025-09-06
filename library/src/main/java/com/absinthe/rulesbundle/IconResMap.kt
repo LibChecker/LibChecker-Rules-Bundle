@@ -152,6 +152,8 @@ object IconResMap {
       put(139, R.drawable.ic_lib_lynx)
       put(140, R.drawable.ic_lib_expo)
       put(141, R.drawable.ic_lib_cordova)
+      put(142, R.drawable.ic_lib_donut)
+      put(143, R.drawable.ic_lib_stripe)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
