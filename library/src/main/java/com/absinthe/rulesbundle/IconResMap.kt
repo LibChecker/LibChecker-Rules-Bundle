@@ -154,6 +154,13 @@ object IconResMap {
       put(141, R.drawable.ic_lib_cordova)
       put(142, R.drawable.ic_lib_donut)
       put(143, R.drawable.ic_lib_stripe)
+      put(144, R.drawable.ic_lib_rn_worklets)
+      put(145, R.drawable.ic_lib_rn_svg)
+      put(146, R.drawable.ic_lib_qualcomm)
+      put(147, R.drawable.ic_lib_akamai)
+      put(148, R.drawable.ic_lib_appcenter)
+      put(149, R.drawable.ic_lib_callstack_media_kit)
+      put(150, R.drawable.ic_lib_expo_av)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
@@ -161,7 +168,7 @@ object IconResMap {
       25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
       97, 100, 101, 103, 104, 108, 110, 111, 124, 136,
-      138, 139, 140
+      138, 139, 140, 149
     )
   }
 
