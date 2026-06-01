@@ -21,7 +21,7 @@ object IconResMap {
       put(8, R.drawable.ic_lib_appauth)
       put(9, R.drawable.ic_lib_baidu)
       put(10, R.drawable.ic_lib_bilibili)
-      put(11, R.drawable.ic_lib_tencent_tds)
+      put(11, R.drawable.ic_lib_huawei_cann)
       put(12, R.drawable.ic_lib_bytedance)
       put(13, R.drawable.ic_lib_chromium)
       put(14, R.drawable.ic_lib_cmb)
@@ -62,7 +62,7 @@ object IconResMap {
       put(49, R.drawable.ic_lib_tencent_ad)
       put(50, R.drawable.ic_lib_tencent_cloud)
       put(51, R.drawable.ic_lib_tencent_map)
-      put(52, R.drawable.ic_lib_tensorflow)
+      put(52, R.drawable.ic_lib_litert)
       put(53, R.drawable.ic_lib_umeng)
       put(54, R.drawable.ic_lib_unionpay)
       put(55, R.drawable.ic_lib_unity)
@@ -161,6 +161,29 @@ object IconResMap {
       put(148, R.drawable.ic_lib_appcenter)
       put(149, R.drawable.ic_lib_callstack_media_kit)
       put(150, R.drawable.ic_lib_expo_av)
+      put(151, R.drawable.ic_lib_datadog)
+      put(152, R.drawable.ic_lib_rn_firebase)
+      put(153, R.drawable.ic_lib_baseflow)
+      put(154, R.drawable.ic_lib_jetbrain_kmp)
+      put(155, R.drawable.ic_lib_comscore)
+      put(156, R.drawable.ic_lib_adjust)
+      put(157, R.drawable.ic_lib_microsoft_intune)
+      put(158, R.drawable.ic_lib_microsoft_extra_id)
+      put(159, R.drawable.ic_lib_microsoft_skiasharp)
+      put(160, R.drawable.ic_lib_rn_skia)
+      put(161, R.drawable.ic_lib_rn_gesture_handler)
+      put(162, R.drawable.ic_lib_rn_image_crop_picker)
+      put(163, R.drawable.ic_lib_jolt)
+      put(164, R.drawable.ic_lib_lame)
+      put(165, R.drawable.ic_lib_intercom)
+      put(166, R.drawable.ic_lib_batch)
+      put(167, R.drawable.ic_lib_notifee)
+      put(168, R.drawable.ic_lib_wasmer)
+      put(169, R.drawable.ic_lib_tds_wcdb)
+      put(170, R.drawable.ic_lib_google_tag_manager)
+      put(171, R.drawable.ic_lib_matrix)
+      put(172, R.drawable.ic_lib_skip)
+      put(173, R.drawable.ic_lib_liftoff)
     }
 
     SINGLE_COLOR_ICON_SET = setOf(
@@ -168,7 +191,7 @@ object IconResMap {
       25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
       59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
       97, 100, 101, 103, 104, 108, 110, 111, 124, 136,
-      138, 139, 140, 149
+      138, 139, 140, 149, 153, 165, 173
     )
   }
 
