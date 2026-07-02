@@ -12,9 +12,6 @@ repositories {
 }
 dependencies {
     implementation "com.github.LibChecker:LibChecker-Rules-Bundle:${latest_version}"
-
-    // Required: Kotlin Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
 }
 ```
 
@@ -39,11 +36,31 @@ class App : Application() {
 Get marked rule
 ```kotlin
 // Native library
-val rule: Rule = LCRules.getRule(name = "libflutter.so", type = NATIVE, useRegex = false)
+val rule: Rule = LCRules.getRule(libName = "libflutter.so", type = NATIVE, useRegex = false)
 
 // Activity library
-val rule2: Rule = LCRules.getRule(name = "androidx.compose.ui.tooling.PreviewActivity", type = ACTIVITY, useRegex = false)
+val rule2: Rule = LCRules.getRule(libName = "androidx.compose.ui.tooling.PreviewActivity", type = ACTIVITY, useRegex = false)
 
 // Query library with RegEx
-val rule3: Rule = LCRules.getRule(name = "libAMapSDK_MAP_v7_9_1.so", type = NATIVE, useRegex = true)
+val rule3: Rule = LCRules.getRule(libName = "libAMapSDK_MAP_v7_9_1.so", type = NATIVE, useRegex = true)
 ```
+
+The SDK reads the bundled rules database through Android's SQLite APIs. It does
+not require Room or AppCompat in host apps.
+
+## Migration
+
+- Remove Room, AppCompat, and Core KTX dependencies if they were added only for
+  this package.
+- Keep calling `LCRules.init(this)` from `Application.onCreate()`.
+- Use `LCRemoteRepo.GitHub` / `LCRemoteRepo.GitLab`. The old `Github` /
+  `Gitlab` aliases still work, but are deprecated.
+- Use `LCRules.close()` instead of `closeDb()`.
+- Do not use the old internal database classes (`RuleDao`, `RuleDatabase`,
+  `RuleRepository`, `Repositories`, `RuleEntity`, or `IAPI`). Query rules only
+  through `LCRules.getRule(...)`.
+
+## JitPack
+
+JitPack builds with JDK 17 and publishes the library module through
+`:library:publishToMavenLocal`.

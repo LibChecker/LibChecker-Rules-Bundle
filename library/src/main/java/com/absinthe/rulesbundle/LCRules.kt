@@ -1,100 +1,54 @@
 package com.absinthe.rulesbundle
 
 import android.content.Context
-import java.lang.ref.WeakReference
 import java.util.*
 
-object LCRules : IAPI {
+object LCRules {
 
-    private var contextRef: WeakReference<Context>? = null
+    private const val RULES_ASSET_PATH = "lcrules/rules.db"
+    private const val VERSION_ASSET_PATH = "lcrules/version.prop"
+
     private var locale: LCLocale = LCLocale.ZH
-    private var repo: LCRemoteRepo = LCRemoteRepo.Github
-    private var baseUrl: String = Urls.GITHUB_ROOT_URL
+    private var remoteRepo: LCRemoteRepo = LCRemoteRepo.GitHub
+    private var metadata = RuleMetadata()
 
-    private var ruleRepo: RuleRepository? = null
+    private var ruleStore: RuleStore? = null
 
+    @Synchronized
     fun init(context: Context) {
-        Repositories.checkRulesDatabase(context)
-        contextRef = WeakReference(context.applicationContext)
-        ruleRepo = RuleRepository(context.applicationContext)
+        val applicationContext = context.applicationContext
+        metadata = readMetadata(applicationContext)
+        ruleStore?.close()
+        ruleStore = RuleStore.open(applicationContext, RULES_ASSET_PATH, metadata.version)
     }
 
+    fun close() {
+        ruleStore?.close()
+        ruleStore = null
+    }
+
+    @Deprecated("Use close().", ReplaceWith("close()"))
     fun closeDb() {
-        ruleRepo?.closeDb()
+        close()
     }
 
-    override fun getVersion(): Int {
-        contextRef?.get()?.assets?.open("lcrules/version.prop")?.let {
-            runCatching {
-                Properties().apply {
-                    load(it)
-                    return getProperty("version").toInt()
-                }
-            }.onFailure {
-                return 0
-            }
-        }
-        return 0
+    fun getVersion(): Int = metadata.version
+
+    fun getItemCounts(): Int = metadata.items
+
+    fun getRulesAssetPath(): String = RULES_ASSET_PATH
+
+    suspend fun getRule(libName: String, @LibType type: Int, useRegex: Boolean): Rule? {
+        val record = ruleStore?.findRule(libName, type, useRegex) ?: return null
+        return record.toRule(libName)
     }
 
-    override fun getItemCounts(): Int {
-        contextRef?.get()?.assets?.open("lcrules/version.prop")?.let {
-            runCatching {
-                Properties().apply {
-                    load(it)
-                    return getProperty("items").toInt()
-                }
-            }.onFailure {
-                return 0
-            }
-        }
-        return 0
-    }
-
-    override fun getRulesAssetPath(): String = "lcrules/rules.db"
-
-    override suspend fun getRule(libName: String, @LibType type: Int, useRegex: Boolean): Rule? {
-        val repo = ruleRepo ?: return null
-        val entity = repo.getRule(libName, type)
-        if (entity != null) {
-            return Rule(
-                libName,
-                type,
-                entity.label,
-                IconResMap.getIconRes(entity.iconIndex),
-                getDescriptionUrl(entity),
-                entity.regexName,
-                IconResMap.isSingleColorIcon(entity.iconIndex)
-            )
-        }
-        if (useRegex) {
-            val regexMap = repo.getRegexRules()
-            val match = regexMap.entries.firstOrNull { it.key.matcher(libName).matches() && it.value.type == type }
-            match?.value?.let {
-                return Rule(
-                    libName,
-                    type,
-                    it.label,
-                    IconResMap.getIconRes(it.iconIndex),
-                    getDescriptionUrl(it),
-                    it.regexName,
-                    IconResMap.isSingleColorIcon(it.iconIndex)
-                )
-            }
-        }
-        return null
-    }
-
-    override fun setLocale(locale: LCLocale) {
+    fun setLocale(locale: LCLocale) {
         this.locale = locale
     }
 
-    override fun setRemoteRepo(repo: LCRemoteRepo) {
-        this.repo = repo
-        this.baseUrl = when (repo) {
-            LCRemoteRepo.Github -> Urls.GITHUB_ROOT_URL
-            LCRemoteRepo.Gitlab -> Urls.GITLAB_ROOT_URL
-        }
+    fun setRemoteRepo(repo: LCRemoteRepo) {
+        this.remoteRepo = repo
     }
 
     private val dirMap = mapOf(
@@ -105,10 +59,42 @@ object LCRules : IAPI {
         PROVIDER to "providers-libs",
         DEX to "dex-libs",
         STATIC to "static-libs",
+        ACTION to "actions-libs",
     )
 
-    private fun getDescriptionUrl(entity: RuleEntity): String? {
-        val dir = dirMap[entity.type] ?: return null
-        return "$baseUrl$dir/${entity.name}.json"
+    private fun RuleRecord.toRule(libName: String): Rule {
+        return Rule(
+            libName = libName,
+            libType = type,
+            label = label,
+            iconRes = IconResMap.getIconRes(iconIndex),
+            descriptionUrl = getDescriptionUrl(this),
+            regexName = regexName,
+            isSimpleColorIcon = IconResMap.isSingleColorIcon(iconIndex)
+        )
     }
+
+    private fun getDescriptionUrl(record: RuleRecord): String? {
+        val dir = dirMap[record.type] ?: return null
+        val fileName = record.regexName ?: record.name
+        return "${remoteRepo.rootUrl}$dir/$fileName.json"
+    }
+
+    private fun readMetadata(context: Context): RuleMetadata {
+        return runCatching {
+            context.assets.open(VERSION_ASSET_PATH).use {
+                Properties().apply { load(it) }
+            }
+        }.map { properties ->
+            RuleMetadata(
+                version = properties.getProperty("version")?.toIntOrNull() ?: 0,
+                items = properties.getProperty("items")?.toIntOrNull() ?: 0
+            )
+        }.getOrDefault(RuleMetadata())
+    }
+
+    private data class RuleMetadata(
+        val version: Int = 0,
+        val items: Int = 0
+    )
 }
