@@ -8,7 +8,6 @@ object LCRules {
     private const val RULES_ASSET_PATH = "lcrules/rules.db"
     private const val VERSION_ASSET_PATH = "lcrules/version.prop"
 
-    private var locale: LCLocale = LCLocale.ZH
     private var remoteRepo: LCRemoteRepo = LCRemoteRepo.GitHub
     private var metadata = RuleMetadata()
 
@@ -44,7 +43,6 @@ object LCRules {
     }
 
     fun setLocale(locale: LCLocale) {
-        this.locale = locale
     }
 
     fun setRemoteRepo(repo: LCRemoteRepo) {

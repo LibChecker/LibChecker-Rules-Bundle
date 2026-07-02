@@ -1,203 +1,205 @@
 package com.absinthe.rulesbundle
 
-import android.util.SparseIntArray
 import com.absinthe.lc.rulesbundle.R
 
 object IconResMap {
-  private val MAP = SparseIntArray(100)
-  private val SINGLE_COLOR_ICON_SET: Set<Int>
+    private const val PLACEHOLDER_INDEX = -1
 
-  init {
-    MAP.apply {
-      put(-1, R.drawable.ic_sdk_placeholder)
-      put(0, R.drawable.ic_lib_360)
-      put(1, R.drawable.ic_lib_airbnb)
-      put(2, R.drawable.ic_lib_ali_security)
-      put(3, R.drawable.ic_lib_alibaba)
-      put(4, R.drawable.ic_lib_alipay)
-      put(5, R.drawable.ic_lib_aliyun)
-      put(6, R.drawable.ic_lib_amap)
-      put(7, R.drawable.ic_lib_android)
-      put(8, R.drawable.ic_lib_appauth)
-      put(9, R.drawable.ic_lib_baidu)
-      put(10, R.drawable.ic_lib_bilibili)
-      put(11, R.drawable.ic_lib_huawei_cann)
-      put(12, R.drawable.ic_lib_bytedance)
-      put(13, R.drawable.ic_lib_chromium)
-      put(14, R.drawable.ic_lib_cmb)
-      put(15, R.drawable.ic_lib_cpp)
-      put(16, R.drawable.ic_lib_didi)
-      put(17, R.drawable.ic_lib_evernote)
-      put(18, R.drawable.ic_lib_meta)
-      put(19, R.drawable.ic_lib_firebase)
-      put(20, R.drawable.ic_lib_flutter)
-      put(21, R.drawable.ic_lib_golang)
-      put(22, R.drawable.ic_lib_google)
-      put(23, R.drawable.ic_lib_google_analytics)
-      put(24, R.drawable.ic_lib_google_arcore)
-      put(25, R.drawable.ic_lib_hapjs)
-      put(26, R.drawable.ic_lib_huawei)
-      put(27, R.drawable.ic_lib_iqiyi)
-      put(28, R.drawable.ic_lib_jetpack)
-      put(29, R.drawable.ic_lib_jpush)
-      put(30, R.drawable.ic_lib_jverification)
-      put(31, R.drawable.ic_lib_kuaishou)
-      put(32, R.drawable.ic_lib_lua)
-      put(33, R.drawable.ic_lib_material)
-      put(34, R.drawable.ic_lib_meizu)
-      put(35, R.drawable.ic_lib_microsoft)
-      put(36, R.drawable.ic_lib_netease)
-      put(37, R.drawable.ic_lib_opencv)
-      put(38, R.drawable.ic_lib_oppo)
-      put(39, R.drawable.ic_lib_play_store)
-      put(40, R.drawable.ic_lib_qiniu)
-      put(41, R.drawable.ic_lib_react)
-      put(42, R.drawable.ic_lib_realm)
-      put(43, R.drawable.ic_lib_rongyun)
-      put(44, R.drawable.ic_lib_sensors)
-      put(45, R.drawable.ic_lib_shizuku)
-      put(46, R.drawable.ic_lib_sqlite)
-      put(47, R.drawable.ic_lib_square)
-      put(48, R.drawable.ic_lib_tencent)
-      put(49, R.drawable.ic_lib_tencent_ad)
-      put(50, R.drawable.ic_lib_tencent_cloud)
-      put(51, R.drawable.ic_lib_tencent_map)
-      put(52, R.drawable.ic_lib_litert)
-      put(53, R.drawable.ic_lib_umeng)
-      put(54, R.drawable.ic_lib_unionpay)
-      put(55, R.drawable.ic_lib_unity)
-      put(56, R.drawable.ic_lib_unreal_engine)
-      put(57, R.drawable.ic_lib_vivo)
-      put(58, R.drawable.ic_lib_webrtc)
-      put(59, R.drawable.ic_lib_weibo)
-      put(60, R.drawable.ic_lib_xamarin)
-      put(61, R.drawable.ic_lib_xiaoai)
-      put(62, R.drawable.ic_lib_xiaomi)
-      put(63, R.drawable.ic_lib_xunfei)
-      put(64, R.drawable.ic_lib_zhihu)
-      put(65, R.drawable.ic_lib_kotlin)
-      put(66, R.drawable.ic_lib_telegram)
-      put(67, R.drawable.ic_lib_ffmpeg)
-      put(68, R.drawable.ic_lib_vlc)
-      put(69, R.drawable.ic_lib_paypal)
-      put(70, R.drawable.ic_lib_qt)
-      put(71, R.drawable.ic_lib_dataranger)
-      put(72, R.drawable.ic_lib_rclone)
-      put(73, R.drawable.ic_lib_sentry)
-      put(74, R.drawable.ic_lib_jd)
-      put(75, R.drawable.ic_lib_curl)
-      put(76, R.drawable.ic_lib_opencc)
-      put(77, R.drawable.ic_lib_zbar)
-      put(78, R.drawable.ic_lib_opus)
-      put(79, R.drawable.ic_lib_live2d)
-      put(80, R.drawable.ic_lib_google_ml_kit)
-      put(81, R.drawable.ic_lib_yandex_speech_kit)
-      put(82, R.drawable.ic_lib_getui)
-      put(83, R.drawable.ic_lib_dx_risk)
-      put(84, R.drawable.ic_lib_clash)
-      put(85, R.drawable.ic_lib_jetpack_compose)
-      put(86, R.drawable.ic_lib_douyin)
-      put(87, R.drawable.ic_lib_agora)
-      put(88, R.drawable.ic_lib_hermes)
-      put(89, R.drawable.ic_lib_netease_yunxin)
-      put(90, R.drawable.ic_lib_applovin)
-      put(91, R.drawable.ic_lib_godot)
-      put(92, R.drawable.ic_lib_gamemaker)
-      put(93, R.drawable.ic_lib_cmcc)
-      put(94, R.drawable.ic_lib_mpaas)
-      put(95, R.drawable.ic_lib_node_js)
-      put(96, R.drawable.ic_lib_fresco)
-      put(97, R.drawable.ic_lib_meituan)
-      put(98, R.drawable.ic_lib_netease_shield)
-      put(99, R.drawable.ic_lib_vorbis)
-      put(100, R.drawable.ic_lib_mapbox)
-      put(101, R.drawable.ic_lib_google_cardboard)
-      put(102, R.drawable.ic_lib_ncnn)
-      put(103, R.drawable.ic_lib_youdao)
-      put(104, R.drawable.ic_lib_honor)
-      put(105, R.drawable.ic_lib_rn_reanimated)
-      put(106, R.drawable.ic_lib_meiqia)
-      put(107, R.drawable.ic_lib_instabug)
-      put(108, R.drawable.ic_lib_rust)
-      put(109, R.drawable.ic_lib_volcengine)
-      put(110, R.drawable.ic_lib_wwise)
-      put(111, R.drawable.ic_lib_gio)
-      put(112, R.drawable.ic_lib_mpv)
-      put(113, R.drawable.ic_lib_isar)
-      put(114, R.drawable.ic_lib_snapdragon)
-      put(115, R.drawable.ic_lib_oracle)
-      put(116, R.drawable.ic_lib_javet)
-      put(117, R.drawable.ic_lib_openvpn)
-      put(118, R.drawable.ic_lib_wireguard)
-      put(119, R.drawable.ic_lib_rootbeer)
-      put(120, R.drawable.ic_lib_xiaohongshu)
-      put(121, R.drawable.ic_lib_megvii)
-      put(122, R.drawable.ic_lib_folly)
-      put(123, R.drawable.ic_lib_ironsource)
-      put(124, R.drawable.ic_lib_android_ide)
-      put(125, R.drawable.ic_lib_rnscreen)
-      put(126, R.drawable.ic_lib_fcitx)
-      put(127, R.drawable.ic_lib_tuanjie)
-      put(128, R.drawable.ic_lib_tvm)
-      put(129, R.drawable.ic_lib_singbox)
-      put(130, R.drawable.ic_lib_google_mediapipe)
-      put(131, R.drawable.ic_lib_tencent_tds)
-      put(132, R.drawable.ic_lib_tencent_beacon)
-      put(133, R.drawable.ic_lib_tencent_youtu)
-      put(134, R.drawable.ic_lib_jna)
-      put(135, R.drawable.ic_lib_maplibre_native)
-      put(136, R.drawable.ic_lib_graphene_os)
-      put(137, R.drawable.ic_lib_termux)
-      put(138, R.drawable.ic_lib_rive)
-      put(139, R.drawable.ic_lib_lynx)
-      put(140, R.drawable.ic_lib_expo)
-      put(141, R.drawable.ic_lib_cordova)
-      put(142, R.drawable.ic_lib_donut)
-      put(143, R.drawable.ic_lib_stripe)
-      put(144, R.drawable.ic_lib_rn_worklets)
-      put(145, R.drawable.ic_lib_rn_svg)
-      put(146, R.drawable.ic_lib_qualcomm)
-      put(147, R.drawable.ic_lib_akamai)
-      put(148, R.drawable.ic_lib_appcenter)
-      put(149, R.drawable.ic_lib_callstack_media_kit)
-      put(150, R.drawable.ic_lib_expo_av)
-      put(151, R.drawable.ic_lib_datadog)
-      put(152, R.drawable.ic_lib_rn_firebase)
-      put(153, R.drawable.ic_lib_baseflow)
-      put(154, R.drawable.ic_lib_jetbrain_kmp)
-      put(155, R.drawable.ic_lib_comscore)
-      put(156, R.drawable.ic_lib_adjust)
-      put(157, R.drawable.ic_lib_microsoft_intune)
-      put(158, R.drawable.ic_lib_microsoft_extra_id)
-      put(159, R.drawable.ic_lib_microsoft_skiasharp)
-      put(160, R.drawable.ic_lib_rn_skia)
-      put(161, R.drawable.ic_lib_rn_gesture_handler)
-      put(162, R.drawable.ic_lib_rn_image_crop_picker)
-      put(163, R.drawable.ic_lib_jolt)
-      put(164, R.drawable.ic_lib_lame)
-      put(165, R.drawable.ic_lib_intercom)
-      put(166, R.drawable.ic_lib_batch)
-      put(167, R.drawable.ic_lib_notifee)
-      put(168, R.drawable.ic_lib_wasmer)
-      put(169, R.drawable.ic_lib_tds_wcdb)
-      put(170, R.drawable.ic_lib_google_tag_manager)
-      put(171, R.drawable.ic_lib_matrix)
-      put(172, R.drawable.ic_lib_skip)
-      put(173, R.drawable.ic_lib_liftoff)
+    private val iconResIds = intArrayOf(
+        // Array position is the iconIndex stored in rules.db.
+        /* 0 */ R.drawable.ic_lib_360,
+        /* 1 */ R.drawable.ic_lib_airbnb,
+        /* 2 */ R.drawable.ic_lib_ali_security,
+        /* 3 */ R.drawable.ic_lib_alibaba,
+        /* 4 */ R.drawable.ic_lib_alipay,
+        /* 5 */ R.drawable.ic_lib_aliyun,
+        /* 6 */ R.drawable.ic_lib_amap,
+        /* 7 */ R.drawable.ic_lib_android,
+        /* 8 */ R.drawable.ic_lib_appauth,
+        /* 9 */ R.drawable.ic_lib_baidu,
+        /* 10 */ R.drawable.ic_lib_bilibili,
+        /* 11 */ R.drawable.ic_lib_huawei_cann,
+        /* 12 */ R.drawable.ic_lib_bytedance,
+        /* 13 */ R.drawable.ic_lib_chromium,
+        /* 14 */ R.drawable.ic_lib_cmb,
+        /* 15 */ R.drawable.ic_lib_cpp,
+        /* 16 */ R.drawable.ic_lib_didi,
+        /* 17 */ R.drawable.ic_lib_evernote,
+        /* 18 */ R.drawable.ic_lib_meta,
+        /* 19 */ R.drawable.ic_lib_firebase,
+        /* 20 */ R.drawable.ic_lib_flutter,
+        /* 21 */ R.drawable.ic_lib_golang,
+        /* 22 */ R.drawable.ic_lib_google,
+        /* 23 */ R.drawable.ic_lib_google_analytics,
+        /* 24 */ R.drawable.ic_lib_google_arcore,
+        /* 25 */ R.drawable.ic_lib_hapjs,
+        /* 26 */ R.drawable.ic_lib_huawei,
+        /* 27 */ R.drawable.ic_lib_iqiyi,
+        /* 28 */ R.drawable.ic_lib_jetpack,
+        /* 29 */ R.drawable.ic_lib_jpush,
+        /* 30 */ R.drawable.ic_lib_jverification,
+        /* 31 */ R.drawable.ic_lib_kuaishou,
+        /* 32 */ R.drawable.ic_lib_lua,
+        /* 33 */ R.drawable.ic_lib_material,
+        /* 34 */ R.drawable.ic_lib_meizu,
+        /* 35 */ R.drawable.ic_lib_microsoft,
+        /* 36 */ R.drawable.ic_lib_netease,
+        /* 37 */ R.drawable.ic_lib_opencv,
+        /* 38 */ R.drawable.ic_lib_oppo,
+        /* 39 */ R.drawable.ic_lib_play_store,
+        /* 40 */ R.drawable.ic_lib_qiniu,
+        /* 41 */ R.drawable.ic_lib_react,
+        /* 42 */ R.drawable.ic_lib_realm,
+        /* 43 */ R.drawable.ic_lib_rongyun,
+        /* 44 */ R.drawable.ic_lib_sensors,
+        /* 45 */ R.drawable.ic_lib_shizuku,
+        /* 46 */ R.drawable.ic_lib_sqlite,
+        /* 47 */ R.drawable.ic_lib_square,
+        /* 48 */ R.drawable.ic_lib_tencent,
+        /* 49 */ R.drawable.ic_lib_tencent_ad,
+        /* 50 */ R.drawable.ic_lib_tencent_cloud,
+        /* 51 */ R.drawable.ic_lib_tencent_map,
+        /* 52 */ R.drawable.ic_lib_litert,
+        /* 53 */ R.drawable.ic_lib_umeng,
+        /* 54 */ R.drawable.ic_lib_unionpay,
+        /* 55 */ R.drawable.ic_lib_unity,
+        /* 56 */ R.drawable.ic_lib_unreal_engine,
+        /* 57 */ R.drawable.ic_lib_vivo,
+        /* 58 */ R.drawable.ic_lib_webrtc,
+        /* 59 */ R.drawable.ic_lib_weibo,
+        /* 60 */ R.drawable.ic_lib_xamarin,
+        /* 61 */ R.drawable.ic_lib_xiaoai,
+        /* 62 */ R.drawable.ic_lib_xiaomi,
+        /* 63 */ R.drawable.ic_lib_xunfei,
+        /* 64 */ R.drawable.ic_lib_zhihu,
+        /* 65 */ R.drawable.ic_lib_kotlin,
+        /* 66 */ R.drawable.ic_lib_telegram,
+        /* 67 */ R.drawable.ic_lib_ffmpeg,
+        /* 68 */ R.drawable.ic_lib_vlc,
+        /* 69 */ R.drawable.ic_lib_paypal,
+        /* 70 */ R.drawable.ic_lib_qt,
+        /* 71 */ R.drawable.ic_lib_dataranger,
+        /* 72 */ R.drawable.ic_lib_rclone,
+        /* 73 */ R.drawable.ic_lib_sentry,
+        /* 74 */ R.drawable.ic_lib_jd,
+        /* 75 */ R.drawable.ic_lib_curl,
+        /* 76 */ R.drawable.ic_lib_opencc,
+        /* 77 */ R.drawable.ic_lib_zbar,
+        /* 78 */ R.drawable.ic_lib_opus,
+        /* 79 */ R.drawable.ic_lib_live2d,
+        /* 80 */ R.drawable.ic_lib_google_ml_kit,
+        /* 81 */ R.drawable.ic_lib_yandex_speech_kit,
+        /* 82 */ R.drawable.ic_lib_getui,
+        /* 83 */ R.drawable.ic_lib_dx_risk,
+        /* 84 */ R.drawable.ic_lib_clash,
+        /* 85 */ R.drawable.ic_lib_jetpack_compose,
+        /* 86 */ R.drawable.ic_lib_douyin,
+        /* 87 */ R.drawable.ic_lib_agora,
+        /* 88 */ R.drawable.ic_lib_hermes,
+        /* 89 */ R.drawable.ic_lib_netease_yunxin,
+        /* 90 */ R.drawable.ic_lib_applovin,
+        /* 91 */ R.drawable.ic_lib_godot,
+        /* 92 */ R.drawable.ic_lib_gamemaker,
+        /* 93 */ R.drawable.ic_lib_cmcc,
+        /* 94 */ R.drawable.ic_lib_mpaas,
+        /* 95 */ R.drawable.ic_lib_node_js,
+        /* 96 */ R.drawable.ic_lib_fresco,
+        /* 97 */ R.drawable.ic_lib_meituan,
+        /* 98 */ R.drawable.ic_lib_netease_shield,
+        /* 99 */ R.drawable.ic_lib_vorbis,
+        /* 100 */ R.drawable.ic_lib_mapbox,
+        /* 101 */ R.drawable.ic_lib_google_cardboard,
+        /* 102 */ R.drawable.ic_lib_ncnn,
+        /* 103 */ R.drawable.ic_lib_youdao,
+        /* 104 */ R.drawable.ic_lib_honor,
+        /* 105 */ R.drawable.ic_lib_rn_reanimated,
+        /* 106 */ R.drawable.ic_lib_meiqia,
+        /* 107 */ R.drawable.ic_lib_instabug,
+        /* 108 */ R.drawable.ic_lib_rust,
+        /* 109 */ R.drawable.ic_lib_volcengine,
+        /* 110 */ R.drawable.ic_lib_wwise,
+        /* 111 */ R.drawable.ic_lib_gio,
+        /* 112 */ R.drawable.ic_lib_mpv,
+        /* 113 */ R.drawable.ic_lib_isar,
+        /* 114 */ R.drawable.ic_lib_snapdragon,
+        /* 115 */ R.drawable.ic_lib_oracle,
+        /* 116 */ R.drawable.ic_lib_javet,
+        /* 117 */ R.drawable.ic_lib_openvpn,
+        /* 118 */ R.drawable.ic_lib_wireguard,
+        /* 119 */ R.drawable.ic_lib_rootbeer,
+        /* 120 */ R.drawable.ic_lib_xiaohongshu,
+        /* 121 */ R.drawable.ic_lib_megvii,
+        /* 122 */ R.drawable.ic_lib_folly,
+        /* 123 */ R.drawable.ic_lib_ironsource,
+        /* 124 */ R.drawable.ic_lib_android_ide,
+        /* 125 */ R.drawable.ic_lib_rnscreen,
+        /* 126 */ R.drawable.ic_lib_fcitx,
+        /* 127 */ R.drawable.ic_lib_tuanjie,
+        /* 128 */ R.drawable.ic_lib_tvm,
+        /* 129 */ R.drawable.ic_lib_singbox,
+        /* 130 */ R.drawable.ic_lib_google_mediapipe,
+        /* 131 */ R.drawable.ic_lib_tencent_tds,
+        /* 132 */ R.drawable.ic_lib_tencent_beacon,
+        /* 133 */ R.drawable.ic_lib_tencent_youtu,
+        /* 134 */ R.drawable.ic_lib_jna,
+        /* 135 */ R.drawable.ic_lib_maplibre_native,
+        /* 136 */ R.drawable.ic_lib_graphene_os,
+        /* 137 */ R.drawable.ic_lib_termux,
+        /* 138 */ R.drawable.ic_lib_rive,
+        /* 139 */ R.drawable.ic_lib_lynx,
+        /* 140 */ R.drawable.ic_lib_expo,
+        /* 141 */ R.drawable.ic_lib_cordova,
+        /* 142 */ R.drawable.ic_lib_donut,
+        /* 143 */ R.drawable.ic_lib_stripe,
+        /* 144 */ R.drawable.ic_lib_rn_worklets,
+        /* 145 */ R.drawable.ic_lib_rn_svg,
+        /* 146 */ R.drawable.ic_lib_qualcomm,
+        /* 147 */ R.drawable.ic_lib_akamai,
+        /* 148 */ R.drawable.ic_lib_appcenter,
+        /* 149 */ R.drawable.ic_lib_callstack_media_kit,
+        /* 150 */ R.drawable.ic_lib_expo_av,
+        /* 151 */ R.drawable.ic_lib_datadog,
+        /* 152 */ R.drawable.ic_lib_rn_firebase,
+        /* 153 */ R.drawable.ic_lib_baseflow,
+        /* 154 */ R.drawable.ic_lib_jetbrain_kmp,
+        /* 155 */ R.drawable.ic_lib_comscore,
+        /* 156 */ R.drawable.ic_lib_adjust,
+        /* 157 */ R.drawable.ic_lib_microsoft_intune,
+        /* 158 */ R.drawable.ic_lib_microsoft_extra_id,
+        /* 159 */ R.drawable.ic_lib_microsoft_skiasharp,
+        /* 160 */ R.drawable.ic_lib_rn_skia,
+        /* 161 */ R.drawable.ic_lib_rn_gesture_handler,
+        /* 162 */ R.drawable.ic_lib_rn_image_crop_picker,
+        /* 163 */ R.drawable.ic_lib_jolt,
+        /* 164 */ R.drawable.ic_lib_lame,
+        /* 165 */ R.drawable.ic_lib_intercom,
+        /* 166 */ R.drawable.ic_lib_batch,
+        /* 167 */ R.drawable.ic_lib_notifee,
+        /* 168 */ R.drawable.ic_lib_wasmer,
+        /* 169 */ R.drawable.ic_lib_tds_wcdb,
+        /* 170 */ R.drawable.ic_lib_google_tag_manager,
+        /* 171 */ R.drawable.ic_lib_matrix,
+        /* 172 */ R.drawable.ic_lib_skip,
+        /* 173 */ R.drawable.ic_lib_liftoff,
+    )
+
+    private val singleColorIconIndexes = setOf(
+        PLACEHOLDER_INDEX, 2, 3, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
+        25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
+        59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
+        97, 100, 101, 103, 104, 108, 110, 111, 124, 136,
+        138, 139, 140, 149, 153, 165, 173,
+    )
+
+    fun getResIndex(res: Int): Int {
+        if (res == R.drawable.ic_sdk_placeholder) return PLACEHOLDER_INDEX
+        val index = iconResIds.indexOf(res)
+        return if (index >= 0) index else PLACEHOLDER_INDEX
     }
 
-    SINGLE_COLOR_ICON_SET = setOf(
-      -1, 2, 3, 5, 6, 9, 10, 11, 13, 14, 15, 16, 17,
-      25, 27, 30, 31, 38, 40, 43, 44, 47, 48, 51, 53, 56,
-      59, 61, 63, 64, 66, 74, 76, 81, 82, 83, 84, 93,
-      97, 100, 101, 103, 104, 108, 110, 111, 124, 136,
-      138, 139, 140, 149, 153, 165, 173
-    )
-  }
+    fun getIconRes(index: Int): Int {
+        return if (index in iconResIds.indices) iconResIds[index] else R.drawable.ic_sdk_placeholder
+    }
 
-  fun getResIndex(res: Int) = MAP.keyAt(MAP.indexOfValue(res))
-
-  fun getIconRes(index: Int) = MAP.get(index, R.drawable.ic_sdk_placeholder)
-
-  fun isSingleColorIcon(index: Int) = SINGLE_COLOR_ICON_SET.contains(index)
+    fun isSingleColorIcon(index: Int) = singleColorIconIndexes.contains(index)
 }

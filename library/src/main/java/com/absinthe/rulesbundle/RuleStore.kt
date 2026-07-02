@@ -4,8 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.Closeable
 import java.io.File
 import java.util.regex.Pattern
@@ -14,13 +12,10 @@ internal class RuleStore private constructor(
     private val database: SQLiteDatabase
 ) : Closeable {
 
-    private var ruleIndex: Map<Int, Map<String, RuleRecord>>? = null
-    private var regexIndex: Map<Int, List<RegexRule>>? = null
+    private var indexes: RuleIndexes? = null
 
-    suspend fun findRule(name: String, @LibType type: Int, useRegex: Boolean): RuleRecord? {
-        return withContext(Dispatchers.IO) {
-            findExactRule(name, type) ?: if (useRegex) findRegexRule(name, type) else null
-        }
+    fun findRule(name: String, @LibType type: Int, useRegex: Boolean): RuleRecord? {
+        return findExactRule(name, type) ?: if (useRegex) findRegexRule(name, type) else null
     }
 
     override fun close() {
@@ -28,47 +23,39 @@ internal class RuleStore private constructor(
     }
 
     private fun findExactRule(name: String, type: Int): RuleRecord? {
-        return getRuleIndex()[type]?.get(name)
+        return getIndexes().exact[type]?.get(name)
     }
 
     private fun findRegexRule(name: String, type: Int): RuleRecord? {
-        return getRegexIndex()[type]
+        return getIndexes().regex[type]
             ?.firstOrNull { it.pattern.matcher(name).matches() }
             ?.record
     }
 
-    private fun getRuleIndex(): Map<Int, Map<String, RuleRecord>> {
-        ruleIndex?.let { return it }
-        return loadRules()
-            .groupBy { it.type }
-            .mapValues { (_, rules) -> rules.associateBy { it.name } }
-            .also { ruleIndex = it }
-    }
-
-    private fun getRegexIndex(): Map<Int, List<RegexRule>> {
-        regexIndex?.let { return it }
-        return loadRules()
-            .filter { it.isRegexRule }
-            .groupBy { it.type }
-            .mapValues { (_, rules) ->
-                rules.map { rule -> RegexRule(Pattern.compile(rule.name), rule) }
-            }
-            .also { regexIndex = it }
-    }
-
-    private fun loadRules(): List<RuleRecord> {
-        return database.query(TABLE_RULES, null, null, null, null, null, null).use { cursor ->
-            buildList {
-                while (cursor.moveToNext()) {
-                    add(cursor.toRuleRecord())
+    private fun getIndexes(): RuleIndexes {
+        indexes?.let { return it }
+        val exact = mutableMapOf<Int, MutableMap<String, RuleRecord>>()
+        val regex = mutableMapOf<Int, MutableList<RegexRule>>()
+        database.query(TABLE_RULES, null, null, null, null, null, null).use { cursor ->
+            while (cursor.moveToNext()) {
+                val record = cursor.toRuleRecord()
+                exact.getOrPut(record.type) { mutableMapOf() }[record.name] = record
+                if (record.isRegexRule) {
+                    regex.getOrPut(record.type) { mutableListOf() }
+                        .add(RegexRule(Pattern.compile(record.name), record))
                 }
             }
         }
+        return RuleIndexes(exact, regex).also { indexes = it }
     }
+
+    private data class RuleIndexes(
+        val exact: Map<Int, Map<String, RuleRecord>>,
+        val regex: Map<Int, List<RegexRule>>
+    )
 
     private fun Cursor.toRuleRecord(): RuleRecord {
         return RuleRecord(
-            id = getInt(getColumnIndexOrThrow(COLUMN_ID)),
             name = getString(getColumnIndexOrThrow(COLUMN_NAME)),
             label = getString(getColumnIndexOrThrow(COLUMN_LABEL)),
             type = getInt(getColumnIndexOrThrow(COLUMN_TYPE)),
@@ -85,7 +72,6 @@ internal class RuleStore private constructor(
 
     companion object {
         private const val TABLE_RULES = "rules_table"
-        private const val COLUMN_ID = "_id"
         private const val COLUMN_NAME = "name"
         private const val COLUMN_LABEL = "label"
         private const val COLUMN_TYPE = "type"
@@ -142,10 +128,9 @@ internal class RuleStore private constructor(
 }
 
 internal data class RuleRecord(
-    val id: Int,
     val name: String,
     val label: String,
-    @LibType val type: Int,
+    @param:LibType val type: Int,
     val iconIndex: Int,
     val isRegexRule: Boolean,
     val regexName: String?

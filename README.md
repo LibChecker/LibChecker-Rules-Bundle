@@ -27,26 +27,33 @@ class App : Application() {
     
     // Optional: set online repo (GitHub repo as default)
     LCRules.setRemoteRepo(LCRemoteRepo.GitHub)
-    
-    // WIP: set rules locale
+
+    // Optional: reserved for future rule locales
     LCRules.setLocale(LCLocale.ZH)
   }
+}
 ```
 
-Get marked rule
+Get marked rule in a suspend context
 ```kotlin
-// Native library
-val rule: Rule = LCRules.getRule(libName = "libflutter.so", type = NATIVE, useRegex = false)
+val rule: Rule? = LCRules.getRule(libName = "libflutter.so", type = NATIVE, useRegex = false)
 
-// Activity library
-val rule2: Rule = LCRules.getRule(libName = "androidx.compose.ui.tooling.PreviewActivity", type = ACTIVITY, useRegex = false)
+val activityRule: Rule? = LCRules.getRule(
+    libName = "androidx.compose.ui.tooling.PreviewActivity",
+    type = ACTIVITY,
+    useRegex = false
+)
 
-// Query library with RegEx
-val rule3: Rule = LCRules.getRule(libName = "libAMapSDK_MAP_v7_9_1.so", type = NATIVE, useRegex = true)
+val regexRule: Rule? = LCRules.getRule(
+    libName = "libAMapSDK_MAP_v7_9_1.so",
+    type = NATIVE,
+    useRegex = true
+)
 ```
 
 The SDK reads the bundled rules database through Android's SQLite APIs. It does
-not require Room or AppCompat in host apps.
+not require Room, AppCompat, Core KTX, or kotlinx-coroutines in host apps.
+Choose the coroutine context for `getRule(...)` in your app.
 
 ## Migration
 
@@ -55,6 +62,8 @@ not require Room or AppCompat in host apps.
 - Keep calling `LCRules.init(this)` from `Application.onCreate()`.
 - Use `LCRemoteRepo.GitHub` / `LCRemoteRepo.GitLab`. The old `Github` /
   `Gitlab` aliases still work, but are deprecated.
+- `LCRules.setLocale(...)` is kept for future rule locales. It is currently a
+  no-op because bundled rules contain one label locale.
 - Use `LCRules.close()` instead of `closeDb()`.
 - Do not use the old internal database classes (`RuleDao`, `RuleDatabase`,
   `RuleRepository`, `Repositories`, `RuleEntity`, or `IAPI`). Query rules only
