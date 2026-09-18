@@ -1,0 +1,35 @@
+{
+  "artifacts": {
+    "android": {
+      "minimumReaderVersion": 5,
+      "path": "releases/45/android-v5.zip",
+      "schemaVersion": 5,
+      "sha256": "eda664bd0956723db367eb4696e1d5cf64142ff403e3ebd93cf04b97dc07103f",
+      "size": 184862
+    },
+    "legacy": {
+      "minimumReaderVersion": 4,
+      "path": "releases/45/legacy-v4.zip",
+      "schemaVersion": 4,
+      "sha256": "c43654296886b17bf32b3d5bc3af8f36ed88729e919a90412e0fcf3214e445ae",
+      "size": 3020555
+    },
+    "portable": {
+      "minimumReaderVersion": 5,
+      "path": "releases/45/portable-v5.zip",
+      "schemaVersion": 5,
+      "sha256": "24ce8daed869da8bb2034e75a4e587bfea7c7b8204c2b2498e952e9b53f88da8",
+      "size": 4263747
+    }
+  },
+  "compilerRevision": "64b9bc5a2ab9740ca35db757e5b9835930f19dfc1af4230edcade565140795e1",
+  "contentSha256": "5708a55f2c3bf9ebefa36afe84606a10bcbe23633be3c37b9e6605fbe502831d",
+  "dataVersion": 45,
+  "minimumReader": {
+    "android": 5,
+    "portable": 5
+  },
+  "ruleCount": 2832,
+  "schemaVersion": 5,
+  "sourceRevision": "7b0a6f92806de7b6c7cf578049b28b555564c223"
+}
