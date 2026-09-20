@@ -46,7 +46,7 @@ jobs:
         run: |
           python3 -B -m unittest discover -s tools -p 'test_*.py'
           ./gradlew :library:assembleRelease :library:assembleDebugAndroidTest
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           branch: automation/bundled-rules
           commit-message: Update locked bundled rules
