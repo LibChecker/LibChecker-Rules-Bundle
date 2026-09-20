@@ -1,0 +1,57 @@
+name: Update bundled rules
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+    inputs:
+      data_version:
+        description: Published immutable rules data version
+        required: false
+        type: string
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: update-bundled-rules
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Verify and pin immutable release
+        id: update
+        env:
+          DATA_VERSION: ${{ inputs.data_version }}
+        run: |
+          RULES_ROOT=https://raw.githubusercontent.com/LibChecker/LibChecker-Rules/rules-data
+          MANIFEST="$RULES_ROOT/manifest.json"
+          if [[ -n "$DATA_VERSION" ]]; then
+            [[ "$DATA_VERSION" =~ ^[1-9][0-9]*$ ]]
+            MANIFEST="$RULES_ROOT/releases/$DATA_VERSION/manifest.json"
+          fi
+          python3 tools/update-rules-bundle.py --manifest "$MANIFEST" --root "$RULES_ROOT"
+          if git diff --quiet -- library/src/main/assets/lcrules/v5 rules/manifest.json; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-java@v6
+        with:
+          distribution: zulu
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Verify updated data and package
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          python3 -B -m unittest discover -s tools -p 'test_*.py'
+          ./gradlew :library:assembleRelease :library:assembleDebugAndroidTest
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/bundled-rules
+          commit-message: Update locked bundled rules
+          title: Update locked bundled rules
+          body: Verified immutable producer artifact and metadata. Review the data version and run Android validation before merging.
+          add-paths: |
+            library/src/main/assets/lcrules/v5/
+            rules/manifest.json
