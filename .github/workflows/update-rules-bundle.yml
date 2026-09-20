@@ -39,7 +39,7 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
       - uses: gradle/actions/setup-gradle@v6
       - name: Verify updated data and package
         if: steps.update.outputs.changed == 'true'
