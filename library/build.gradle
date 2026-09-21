@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    compileOnly 'androidx.annotation:annotation:1.9.1'
+    compileOnly 'androidx.annotation:annotation:1.10.0'
     androidTestImplementation 'androidx.test:runner:1.7.0'
     androidTestImplementation 'androidx.test.ext:junit:1.3.0'
 }
