@@ -68,7 +68,9 @@ Choose the coroutine context for `getRule(...)` in your app.
 ## JitPack
 
 JitPack builds with JDK 17 and publishes the library module through
-`:library:publishToMavenLocal`.
+`:library:publishToMavenLocal`. AGP 9.4 requires Gradle 9.6 or newer; use the
+checked-in wrapper. Kotlin compilation uses AGP built-in support, with the
+Kotlin Parcelize plugin declared separately.
 
 ## Bundled baseline and downloaded v5 data
 
@@ -154,10 +156,8 @@ dependencies beyond Kotlin already used by the app. Rebuild this AAR after Bundl
 source changes. No publication or invented Maven version is required.
 
 A composite `includeBuild` substitution can work when the host uses a compatible
-Gradle/AGP toolchain. It does **not** currently work with LibChecker's Gradle 9.7 /
-AGP 9.4: Bundle's AGP 8.11 references Gradle internals removed in Gradle 9.6.
-Use the separately built AAR for this host. Keep this repository's Gradle wrapper
-for its standalone checks. Library code releases and Rules data releases are
+Gradle/AGP toolchain. Use the separately built AAR for host integration checks
+and this repository's Gradle wrapper for standalone checks. Library code releases and Rules data releases are
 independent.
 
 Build the library and test APK (JDK 17 for this standalone Gradle wrapper):
