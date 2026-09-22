@@ -4,14 +4,14 @@
       "minimumReaderVersion": 5,
       "path": "releases/45/android-v5.zip",
       "schemaVersion": 5,
-      "sha256": "c91d36b9a7362a5b93c4707fc29a4ac20ecff13e889f29c4e75d53d35e924763",
+      "sha256": "dc3864ebde7668fa724936bbb12a409715037e00a9fe86a4dbe0e935a2bc5f2e",
       "size": 205342
     },
     "legacy": {
       "minimumReaderVersion": 4,
       "path": "releases/45/legacy-v4.zip",
       "schemaVersion": 4,
-      "sha256": "c43654296886b17bf32b3d5bc3af8f36ed88729e919a90412e0fcf3214e445ae",
+      "sha256": "1ac9a66c70ef1c7c1f2898c4fc521407ad0c54a87b91cc024353a41e5a6d16e6",
       "size": 3020555
     },
     "portable": {
