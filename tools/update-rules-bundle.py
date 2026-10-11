@@ -8,6 +8,19 @@ import pathlib
 import urllib.request
 import zipfile
 
+REPLACEMENT_OPERATION = 'v46-replacement-20261011'
+OLD_LOCK_SHA256 = '7622f0490d0c5108086df57ea3daf7eb74bd54ec1a3b73b45fd86a6a7ef8b734'
+NEW_CONTENT_SHA256 = 'b7b7d500ad48af2898f2e42724e8032f933cc0d61d5fc628a8acb725fbc89bda'
+
+
+def authorize_replacement(lock, manifest):
+    require(hashlib.sha256(lock.read_bytes()).hexdigest() == OLD_LOCK_SHA256, 'Old V46 lock changed or replacement consumed')
+    previous = json.loads(lock.read_bytes())
+    require(previous['dataVersion'] == manifest['dataVersion'] == 46, 'Replacement restricted to V46')
+    require(manifest.get('contentSha256') == NEW_CONTENT_SHA256 and manifest.get('ruleCount') == 3041, 'Authorized V46 content mismatch')
+    return previous
+
+
 MAX_BYTES = 32 * 1024 * 1024
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
@@ -33,6 +46,7 @@ def main():
     parser.add_argument('--manifest', required=True)
     parser.add_argument('--root', required=True, help='Producer output directory or HTTPS rules-data root')
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--replace-unpublished-v46', action='store_true', help='Consume only the pinned 2026-10-11 V46 authorization')
     args = parser.parse_args()
     raw = read(args.manifest, 1024 * 1024)
     manifest = json.loads(raw)
@@ -60,7 +74,17 @@ def main():
     else:
         if lock.exists():
             previous = json.loads(lock.read_bytes())
-            require(manifest['dataVersion'] > previous['dataVersion'] or manifest == previous, 'Use a forward version to change bundled rules')
+            if args.replace_unpublished_v46:
+                previous = authorize_replacement(lock, manifest)
+            else:
+                require(manifest['dataVersion'] > previous['dataVersion'] or manifest == previous, 'Use a forward version to change bundled rules')
+        require(not args.replace_unpublished_v46 or lock.exists(), 'Replacement requires existing old V46 lock')
+        if args.replace_unpublished_v46:
+            audit = dict(operation=REPLACEMENT_OPERATION, oldLockSha256=OLD_LOCK_SHA256, oldManifest=previous, newManifest=manifest)
+            audit_path = ROOT / 'rules/replacement-audits' / (REPLACEMENT_OPERATION + '.json')
+            require(not audit_path.exists(), 'Replacement authorization consumed')
+            audit_path.parent.mkdir(parents=True, exist_ok=True)
+            audit_path.write_text(json.dumps(audit, indent=2, sort_keys=True) + '\n')
         destination.mkdir(parents=True, exist_ok=True)
         for name, data in files.items():
             (destination / name).write_bytes(data)
