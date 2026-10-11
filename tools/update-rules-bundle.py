@@ -9,6 +9,8 @@ import urllib.request
 import zipfile
 
 REPLACEMENT_OPERATION = 'v46-replacement-20261011'
+REPLACEMENT_SOURCE_REVISION = '2de5986af14acbfce266b17633ef31ecb96b717e'
+REPLACEMENT_COMPILER_REVISION = 'd09fc13240cd92fca9c7b5abb2baf4f3a9c4122db1f1e67e110e336383b4e0c2'
 OLD_LOCK_SHA256 = '7622f0490d0c5108086df57ea3daf7eb74bd54ec1a3b73b45fd86a6a7ef8b734'
 NEW_CONTENT_SHA256 = 'b7b7d500ad48af2898f2e42724e8032f933cc0d61d5fc628a8acb725fbc89bda'
 
@@ -18,6 +20,7 @@ def authorize_replacement(lock, manifest):
     previous = json.loads(lock.read_bytes())
     require(previous['dataVersion'] == manifest['dataVersion'] == 46, 'Replacement restricted to V46')
     require(manifest.get('contentSha256') == NEW_CONTENT_SHA256 and manifest.get('ruleCount') == 3041, 'Authorized V46 content mismatch')
+    require(manifest.get('sourceRevision') == REPLACEMENT_SOURCE_REVISION and manifest.get('compilerRevision') == REPLACEMENT_COMPILER_REVISION, 'Authorized V46 source/compiler mismatch')
     return previous
 
 

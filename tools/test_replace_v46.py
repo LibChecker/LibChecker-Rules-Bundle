@@ -15,10 +15,12 @@ class ReplacementTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             lock=Path(tmp)/'manifest.json';lock.write_text(json.dumps(dict(dataVersion=46)))
             checksum=hashlib.sha256(lock.read_bytes()).hexdigest()
-            manifest=dict(dataVersion=46,ruleCount=3041,contentSha256=update.NEW_CONTENT_SHA256)
+            manifest=dict(dataVersion=46,ruleCount=3041,contentSha256=update.NEW_CONTENT_SHA256,sourceRevision=update.REPLACEMENT_SOURCE_REVISION,compilerRevision=update.REPLACEMENT_COMPILER_REVISION)
             with patch.object(update,'OLD_LOCK_SHA256',checksum):
                 self.assertEqual(46,update.authorize_replacement(lock,manifest)['dataVersion'])
                 with self.assertRaisesRegex(ValueError,'restricted'):update.authorize_replacement(lock,{**manifest,'dataVersion':47})
                 with self.assertRaisesRegex(ValueError,'content'):update.authorize_replacement(lock,{**manifest,'contentSha256':'other'})
+                with self.assertRaisesRegex(ValueError,'source/compiler'):update.authorize_replacement(lock,{**manifest,'sourceRevision':'wrong'})
+                with self.assertRaisesRegex(ValueError,'source/compiler'):update.authorize_replacement(lock,{**manifest,'compilerRevision':'wrong'})
                 lock.write_text(json.dumps(manifest))
                 with self.assertRaisesRegex(ValueError,'consumed'):update.authorize_replacement(lock,manifest)
