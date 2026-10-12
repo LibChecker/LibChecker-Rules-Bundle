@@ -231,7 +231,11 @@ publication version and does not select the JitPack coordinate.
 
 To retry a failed publication, run **Publish rules to JitPack** manually on `main`.
 An existing tag is reused without moving it, and a changed manifest under the same
-data version is rejected. Library-only releases still need their own version tag;
+data version is rejected. If JitPack cached a failed build (including a lookup
+before the tag existed), sign in to JitPack with repository push access, remove
+only that failed build record, and rerun the workflow. Repeated Maven requests
+alone do not clear a failed build; do not delete or move the Git tag.
+Library-only releases still need their own version tag;
 this workflow automatically releases data-version updates only.
 To repeat the Maven acceptance check from the release checkout:
 
