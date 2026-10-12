@@ -1,0 +1,59 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
+
+def bundleRoot = file('../..')
+def manifest = new JsonSlurper().parse(new File(bundleRoot, 'rules/manifest.json'))
+def rulesVersion = manifest.dataVersion.toString()
+
+repositories {
+    maven {
+        url = uri('https://jitpack.io')
+        content { includeGroup('com.github.LibChecker') }
+    }
+    google()
+    mavenCentral()
+}
+
+configurations {
+    published
+}
+
+dependencies {
+    published "com.github.LibChecker:LibChecker-Rules-Bundle:${rulesVersion}"
+}
+
+tasks.register('verifyPublished') {
+    doLast {
+        def artifacts = configurations.published.resolvedConfiguration.resolvedArtifacts
+        def artifact = artifacts.find {
+            it.moduleVersion.id.group == 'com.github.LibChecker' &&
+                it.name == 'LibChecker-Rules-Bundle' && it.moduleVersion.id.version == rulesVersion
+        }
+        assert artifact != null && artifact.extension == 'aar': 'Maven did not resolve the release AAR'
+        new ZipFile(artifact.file).withCloseable { aar ->
+            assert aar.entries().findAll { it.name.endsWith('/rules.db') }*.name ==
+                ['assets/lcrules/v5/rules.db']: 'Expected exactly one v5 database'
+            ['rules.db', 'metadata.json'].each { name ->
+                def entry = aar.getEntry("assets/lcrules/v5/${name}")
+                assert entry != null: "Missing ${name}"
+                def actual = aar.getInputStream(entry).withCloseable { it.bytes }
+                def expected = new File(bundleRoot, "library/src/main/assets/lcrules/v5/${name}").bytes
+                assert Arrays.equals(actual, expected): "Published ${name} differs from the release baseline"
+            }
+            def classes = aar.getEntry('classes.jar')
+            assert classes != null: 'Missing reader classes'
+            new ZipInputStream(aar.getInputStream(classes)).withCloseable { jar ->
+                def found = false
+                for (def entry = jar.nextEntry; entry != null; entry = jar.nextEntry) {
+                    found |= entry.name == 'com/absinthe/rulesbundle/RuleReader.class'
+                }
+                assert found: 'Missing RuleReader class'
+            }
+        }
+        def sha256 = MessageDigest.getInstance('SHA-256').digest(artifact.file.bytes).encodeHex()
+        println "Verified com.github.LibChecker:LibChecker-Rules-Bundle:${rulesVersion}"
+        println "AAR SHA-256: ${sha256}"
+    }
+}

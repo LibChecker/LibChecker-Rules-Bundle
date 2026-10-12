@@ -1,0 +1,79 @@
+name: Publish rules to JitPack
+on:
+  push:
+    branches: [main]
+    paths:
+      - rules/manifest.json
+      - .github/workflows/publish-jitpack.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-rules-jitpack
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+      - name: Test release guards and resolve immutable version
+        id: release
+        run: |
+          python3 -B -m unittest discover -s tools -p 'test_*.py'
+          version=$(python3 tools/release-version.py)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if git show-ref --verify --quiet "refs/tags/$version"; then
+            git checkout --detach "refs/tags/$version"
+          fi
+      - uses: actions/setup-java@v6
+        with:
+          distribution: zulu
+          java-version: 17
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Verify producer baseline and Maven package
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          RULES_ROOT=https://raw.githubusercontent.com/LibChecker/LibChecker-Rules/rules-data
+          python3 tools/update-rules-bundle.py --check \
+            --manifest "$RULES_ROOT/releases/$VERSION/manifest.json" --root "$RULES_ROOT"
+          ./gradlew :library:publishToMavenLocal :library:assembleDebugAndroidTest
+      - name: Create immutable release tag
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          if ! git show-ref --verify --quiet "refs/tags/$VERSION"; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git tag -a "$VERSION" -m "Rules $VERSION"
+            git push origin "refs/tags/$VERSION"
+          fi
+      # GITHUB_TOKEN tag pushes do not start other workflows, so request JitPack here.
+      - name: Request JitPack build and wait for Maven metadata
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          URL="https://jitpack.io/com/github/LibChecker/LibChecker-Rules-Bundle/$VERSION/LibChecker-Rules-Bundle-$VERSION.pom"
+          for attempt in {1..30}; do
+            if curl --fail --location --connect-timeout 15 --max-time 60 "$URL" -o "$RUNNER_TEMP/rules.pom"; then
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "::error::JitPack did not publish $VERSION; inspect https://jitpack.io/com/github/LibChecker/LibChecker-Rules-Bundle/$VERSION/build.log"
+          exit 1
+      - name: Resolve Maven dependency and verify published AAR
+        run: ./gradlew -p tools/maven-smoke verifyPublished --refresh-dependencies --no-configuration-cache

@@ -220,6 +220,24 @@ keeps the full producer lock at `rules/manifest.json`, outside packaged assets.
 It never also stores the ZIP. An existing same-version lock can only be reverified,
 not changed; changed data requires a forward version. The scheduled/manual
 `.github/workflows/update-rules-bundle.yml` uses the same updater, builds the Bundle
-and opens an own-repository PR. It does not publish a release or modify the App.
+and opens an own-repository PR. It does not modify the App.
+After a rules manifest update reaches `main`, `publish-jitpack.yml` verifies the
+immutable producer baseline, builds the Maven package, and creates a numeric tag
+matching `dataVersion` (for example, `46`). It then requests the JitPack build and
+resolves `com.github.LibChecker:LibChecker-Rules-Bundle:46` through an independent
+Gradle consumer, checking that the AAR contains the exact baseline DB and metadata
+and the reader class. The tag is the JitPack version; `PROJ_VERSION` is the local
+publication version and does not select the JitPack coordinate.
+
+To retry a failed publication, run **Publish rules to JitPack** manually on `main`.
+An existing tag is reused without moving it, and a changed manifest under the same
+data version is rejected. Library-only releases still need their own version tag;
+this workflow automatically releases data-version updates only.
+To repeat the Maven acceptance check from the release checkout:
+
+```sh
+./gradlew -p tools/maven-smoke verifyPublished --refresh-dependencies --no-configuration-cache
+```
+
 New Android icons still use the separate pinned resource sync and
 require a resource release; a baseline data update does not create drawables.
