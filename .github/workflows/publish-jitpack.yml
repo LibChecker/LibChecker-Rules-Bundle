@@ -6,6 +6,11 @@ on:
       - rules/manifest.json
       - .github/workflows/publish-jitpack.yml
   workflow_dispatch:
+    inputs:
+      version:
+        description: Maven tag (defaults to dataVersion; use e.g. 46.1 for a packaging revision)
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -30,10 +35,13 @@ jobs:
           python-version: '3.14'
       - name: Test release guards and resolve immutable version
         id: release
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
         run: |
           python3 -B -m unittest discover -s tools -p 'test_*.py'
-          version=$(python3 tools/release-version.py)
+          version=$(python3 tools/release-version.py "$RELEASE_VERSION")
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "data_version=$(python3 -c 'import json; print(json.load(open("rules/manifest.json"))["dataVersion"])')" >> "$GITHUB_OUTPUT"
           if git show-ref --verify --quiet "refs/tags/$version"; then
             git checkout --detach "refs/tags/$version"
           fi
@@ -45,11 +53,11 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
       - name: Verify producer baseline and Maven package
         env:
-          VERSION: ${{ steps.release.outputs.version }}
+          DATA_VERSION: ${{ steps.release.outputs.data_version }}
         run: |
           RULES_ROOT=https://raw.githubusercontent.com/LibChecker/LibChecker-Rules/rules-data
           python3 tools/update-rules-bundle.py --check \
-            --manifest "$RULES_ROOT/releases/$VERSION/manifest.json" --root "$RULES_ROOT"
+            --manifest "$RULES_ROOT/releases/$DATA_VERSION/manifest.json" --root "$RULES_ROOT"
           ./gradlew :library:publishToMavenLocal :library:assembleDebugAndroidTest
       - name: Create immutable release tag
         env:
@@ -76,4 +84,6 @@ jobs:
           echo "::error::JitPack did not publish $VERSION; inspect https://jitpack.io/com/github/LibChecker/LibChecker-Rules-Bundle/$VERSION/build.log"
           exit 1
       - name: Resolve Maven dependency and verify published AAR
-        run: ./gradlew -p tools/maven-smoke verifyPublished --refresh-dependencies --no-configuration-cache
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: ./gradlew -p tools/maven-smoke verifyPublished "-PrulesVersion=$VERSION" --refresh-dependencies --no-configuration-cache

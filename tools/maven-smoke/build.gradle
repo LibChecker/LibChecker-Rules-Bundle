@@ -5,7 +5,7 @@ import java.util.zip.ZipInputStream
 
 def bundleRoot = file('../..')
 def manifest = new JsonSlurper().parse(new File(bundleRoot, 'rules/manifest.json'))
-def rulesVersion = manifest.dataVersion.toString()
+def rulesVersion = providers.gradleProperty('rulesVersion').getOrElse(manifest.dataVersion.toString())
 
 repositories {
     maven {
@@ -33,6 +33,9 @@ tasks.register('verifyPublished') {
         }
         assert artifact != null && artifact.extension == 'aar': 'Maven did not resolve the release AAR'
         new ZipFile(artifact.file).withCloseable { aar ->
+            assert aar.entries().findAll {
+                !it.directory && it.name.startsWith('res/drawable') && !it.name.endsWith('.xml')
+            }.empty: 'Published AAR contains non-vector drawables'
             assert aar.entries().findAll { it.name.endsWith('/rules.db') }*.name ==
                 ['assets/lcrules/v5/rules.db']: 'Expected exactly one v5 database'
             ['rules.db', 'metadata.json'].each { name ->

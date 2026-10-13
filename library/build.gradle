@@ -11,6 +11,8 @@ android {
 
     defaultConfig {
         minSdk = 21
+        // Keep vectors as XML instead of generating density-specific PNG fallbacks.
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,4 +51,20 @@ kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
+}
+
+tasks.register('verifyVectorOnlyAar') {
+    dependsOn 'bundleReleaseAar'
+    doLast {
+        new java.util.zip.ZipFile(layout.buildDirectory.file('outputs/aar/library-release.aar').get().asFile).withCloseable { aar ->
+            def bitmaps = aar.entries().findAll {
+                !it.directory && it.name.startsWith('res/drawable') && !it.name.endsWith('.xml')
+            }*.name
+            assert bitmaps.empty: "Non-vector drawables in AAR (${bitmaps.size()}): ${bitmaps.take(5)}"
+        }
+    }
+}
+
+tasks.withType(org.gradle.api.publish.maven.tasks.PublishToMavenLocal).configureEach {
+    dependsOn 'verifyVectorOnlyAar'
 }

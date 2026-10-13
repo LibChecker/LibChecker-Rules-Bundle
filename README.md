@@ -197,6 +197,9 @@ It rejects removal or reassignment of old indexes and missing previously shipped
 vectors. New web-only indexes map to the placeholder until an Android XML exists.
 The generated map records its source commit; Gradle compiles the copied XML.
 No SVG-to-Android conversion or network fetch is involved.
+Only VectorDrawable XML is shipped; icons without an Android vector keep the
+placeholder. Gradle PNG generation is disabled. `:library:verifyVectorOnlyAar`
+and the Maven acceptance check reject bitmap drawables in the actual AAR.
 
 Rules reusing shipped icons need only a data release. A new Android icon needs
 this resource sync, a Bundle code/resource release and an App dependency update.
@@ -235,12 +238,16 @@ data version is rejected. If JitPack cached a failed build (including a lookup
 before the tag existed), sign in to JitPack with repository push access, remove
 only that failed build record, and rerun the workflow. Repeated Maven requests
 alone do not clear a failed build; do not delete or move the Git tag.
-Library-only releases still need their own version tag;
-this workflow automatically releases data-version updates only.
+For a library/resource packaging revision, supply `version` (for example `46.1`)
+when dispatching the workflow. The prefix must match the bundled `dataVersion`;
+the patch tag does not change the producer data version. Automatic manifest
+updates continue to publish the integer data version.
 To repeat the Maven acceptance check from the release checkout:
 
 ```sh
 ./gradlew -p tools/maven-smoke verifyPublished --refresh-dependencies --no-configuration-cache
+# For a packaging revision of the same rules data:
+./gradlew -p tools/maven-smoke verifyPublished -PrulesVersion=46.1 --refresh-dependencies --no-configuration-cache
 ```
 
 New Android icons still use the separate pinned resource sync and
