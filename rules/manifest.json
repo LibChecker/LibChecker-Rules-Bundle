@@ -2,34 +2,34 @@
   "artifacts": {
     "android": {
       "minimumReaderVersion": 5,
-      "path": "releases/48/android-v5.zip",
+      "path": "releases/50/android-v5.zip",
       "schemaVersion": 5,
-      "sha256": "2a50a805f28061d646b7e336cf8a5802642dd1ca26206e0bd5475a088c2410bf",
+      "sha256": "7f4506eab1117766a7378dfb74ecb61da7fcd2ebdb4228d5c6c4682e2e93039a",
       "size": 217630
     },
     "legacy": {
       "minimumReaderVersion": 4,
-      "path": "releases/48/legacy-v4.zip",
+      "path": "releases/50/legacy-v4.zip",
       "schemaVersion": 4,
-      "sha256": "b341f8bd893099bdc89cacd3121fabf0c0d5e8e0850cfb784da1e2282b0ad098",
-      "size": 3211851
+      "sha256": "7849bd5276d7f91c55bd425a6e5caa501776b3d97a40d54fca9a8adc5fa458da",
+      "size": 3221092
     },
     "portable": {
       "minimumReaderVersion": 5,
-      "path": "releases/48/portable-v5.zip",
+      "path": "releases/50/portable-v5.zip",
       "schemaVersion": 5,
-      "sha256": "ca7fe22da47c1e05671b3b161f363cc77ea4d090816cd1e59e0f37c37846abec",
-      "size": 4644413
+      "sha256": "9c7acc036dc628ae0cfd27604b1ccf8ee3deadd7d3cddea2e66b9b42b40edbd7",
+      "size": 4651175
     }
   },
   "compilerRevision": "d09fc13240cd92fca9c7b5abb2baf4f3a9c4122db1f1e67e110e336383b4e0c2",
-  "contentSha256": "1e52ba916f556f5ac029bac8d700657d2dc8c909e3deb7401e0a7c45c8d59e4e",
-  "dataVersion": 48,
+  "contentSha256": "cfe37f088d456620d2251901c6e5b5ff7d1d9aeaa9198b1ac252f73ab5ffe6c5",
+  "dataVersion": 50,
   "minimumReader": {
     "android": 5,
     "portable": 5
   },
-  "ruleCount": 3048,
+  "ruleCount": 3053,
   "schemaVersion": 5,
-  "sourceRevision": "17b4e2675687063cd75ce9f9417ae03d8b602a6a"
+  "sourceRevision": "50b60fe3381e02b6f6078df36f4c72aa7bc599f8"
 }
